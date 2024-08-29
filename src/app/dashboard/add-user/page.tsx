@@ -17,6 +17,7 @@ export default function AddUser() {
             id="username"
             name="username"
             className="border-2 px-2"
+            maxLength={255}
             required
           />
           <label htmlFor="userabout" className="mt-5">About</label>
@@ -25,6 +26,7 @@ export default function AddUser() {
             form="addUserForm"
             id="userabout"
             className="border-2 py-1 px-2"
+            maxLength={255}
             required
           ></textarea>
           <div className="mt-5 text-end">

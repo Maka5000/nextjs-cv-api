@@ -1,15 +1,19 @@
-import { deleteUser } from "@/app/lib/actions";
-import { fetchUsers } from "@/app/lib/data";
-import Link from "next/link";
+import { deleteEducation } from "@/app/lib/actions";
+import EducationForm from "../modals/forms/EducationForm";
+import TableModal from "../modals/tableModal";
+import { fetchEducations } from "@/app/lib/data";
 
-export default async function UsersTable() {
-  const users = await fetchUsers();
+export default async function EducationTable({
+  userid,
+}: Readonly<{ userid: string }>) {
+
+  const educations = await fetchEducations(userid);
 
   return (
     <div className="flex flex-col">
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
-          <div className="border rounded-lg shadow overflow-hidden">
+          <div className="border rounded-lg overflow-hidden">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -17,44 +21,49 @@ export default async function UsersTable() {
                     scope="col"
                     className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
                   >
-                    Id
+                    Establishment
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
                   >
-                    Name
+                    Program
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Degree
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
-                    <Link
-                      href={"/dashboard/add-user"}
-                      className="bg-blue-500 rounded-xl px-5 text-white text-sm transition-colors hover:bg-blue-700"
+                    <TableModal
+                      modalTitle="Add Education"
+                      btnTitle="Add Education"
                     >
-                      Add User
-                    </Link>
+                      <EducationForm userid={userid} />
+                    </TableModal>
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 text-start">
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {user.id}
+              <tbody className="divide-y divide-gray-200">
+                {educations.map((ed) => (
+                  <tr key={ed.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                      {ed.establishment}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Link
-                        href={`/user/${user.id}`}
-                        className="text-blue-600 hover:text-blue-800"
-                      >
-                        {user.name}
-                      </Link>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {ed.program}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {ed.degree}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                      <form action={deleteUser}>
-                        <input type="hidden" name="userid" value={user.id} />
+                      <form action={deleteEducation}>
+                        <input type="hidden" name="userid" value={ed.user_id} />
+                        <input type="hidden" name="edId" value={ed.id} />
                         <button
                           type="submit"
                           className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
