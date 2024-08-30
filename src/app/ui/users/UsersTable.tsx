@@ -1,6 +1,7 @@
 import { deleteUser } from "@/app/lib/actions";
 import { fetchUsers } from "@/app/lib/data";
 import Link from "next/link";
+import DeleteBtn from "../DeleteButton";
 
 export default async function UsersTable() {
   const users = await fetchUsers();
@@ -53,15 +54,11 @@ export default async function UsersTable() {
                       </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                      <form action={deleteUser}>
-                        <input type="hidden" name="userid" value={user.id} />
-                        <button
-                          type="submit"
-                          className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none"
-                        >
-                          Delete
-                        </button>
-                      </form>
+                      <DeleteBtn
+                        userid={user.id}
+                        itemName={user.name}
+                        deleteHandler={{ user: deleteUser }}
+                      />
                     </td>
                   </tr>
                 ))}

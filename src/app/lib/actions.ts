@@ -23,11 +23,9 @@ export async function createUser(formData: FormData) {
   redirect("/dashboard/users");
 }
 
-export async function deleteUser(formData: FormData) {
+export async function deleteUser(userid : string) {
   try {
-    const userid = formData.get("userid");
-
-    await sql`DELETE FROM users WHERE id = ${userid?.toString()}`;
+    await sql`DELETE FROM users WHERE id = ${userid}`;
   } catch (error) {
     console.error("Database error: ", error);
     throw new Error("Failed to delete user.");
@@ -50,7 +48,7 @@ export async function createEducation(formData: FormData) {
       ${EdProgram?.toString()},
       ${EdDegree?.toString()}
     );
-    `
+    `;
   } catch (error) {
     console.log(error);
   }
@@ -61,7 +59,7 @@ export async function createEducation(formData: FormData) {
 export async function deleteEducation(formData: FormData) {
   try {
     const userid = formData.get("userid");
-    const educationId = formData.get('edId');
+    const educationId = formData.get("edId");
 
     await sql`DELETE FROM educations WHERE id = ${educationId?.toString()} AND user_id = ${userid?.toString()}`;
   } catch (error) {
@@ -70,4 +68,37 @@ export async function deleteEducation(formData: FormData) {
   }
 
   revalidatePath("/dashboard/users");
+}
+
+export async function createSkill(formData: FormData) {
+  const userId = formData.get("userid");
+  // const iconURL = formData.get("iconUrl");
+  const skillName = formData.get("skillname");
+  const skillLevel = formData.get("level");
+  try {
+    await sql`
+    INSERT INTO Skills VALUES (
+      uuid_generate_v4(),
+      ${userId?.toString()},
+      'iconUrl',
+      ${skillName?.toString()},
+      ${skillLevel?.toString()}
+    );`;
+  } catch (error) {
+    console.log(error);
+  }
+
+  revalidatePath(`/dashboard/users/${userId?.toString()}`);
+}
+
+export async function deleteSkill(userId: string, skillId: string) {
+  try {
+    await sql`DELETE FROM skills WHERE id = ${skillId} AND user_id = ${userId}`;
+  } catch (error) {
+    console.error("Database error: ", error);
+    throw new Error("Failed to delete Education.");
+  }
+
+  revalidatePath(`/dashboard/users/${userId?.toString()}`);
+  return {message : `Deleted`}
 }

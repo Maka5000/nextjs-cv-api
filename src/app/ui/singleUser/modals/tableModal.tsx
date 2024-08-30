@@ -12,7 +12,7 @@ export default function TableModal({
 
   function openModal() {
     MySwal.fire({
-      title: <h2>{modalTitle}</h2>,
+      title: <p>{modalTitle}</p>,
       html: <div>{children}</div>,
       showCancelButton : true,
       showConfirmButton : false,

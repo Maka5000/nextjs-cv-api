@@ -1,4 +1,14 @@
-export default async function SkillsTable() {
+import { fetchSkills } from "@/app/lib/data";
+import DeleteBtn from "../../DeleteButton";
+import SkillsForm from "../modals/forms/SkillsForm";
+import TableModal from "../modals/tableModal";
+import { deleteSkill } from "@/app/lib/actions";
+
+export default async function SkillsTable({
+  userid,
+}: Readonly<{ userid: string }>) {
+  const skills = await fetchSkills(userid);
+
   return (
     <div className="flex flex-col">
       <div className="-m-1.5 overflow-x-auto">
@@ -29,29 +39,34 @@ export default async function SkillsTable() {
                     scope="col"
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
+                    <TableModal btnTitle="Add Skill" modalTitle="Add Skill">
+                      <SkillsForm userid={userid} />
+                    </TableModal>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                    Icon
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                    JavaScript
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                    Basics
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                {skills.map((skill) => (
+                  <tr key={skill.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                      Icon
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {skill.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {skill.level}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                      <DeleteBtn
+                        userid={skill.user_id}
+                        itemId={skill.id}
+                        deleteHandler={{ item: deleteSkill }}
+                        itemName={skill.name}
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

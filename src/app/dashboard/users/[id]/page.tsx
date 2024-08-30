@@ -35,7 +35,7 @@ export default async function SingleUserPage({ params } : { params : {id : strin
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Skills</h3>
-        <SkillsTable />
+        <SkillsTable userid={params.id} />
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Projects</h3>

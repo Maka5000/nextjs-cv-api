@@ -36,3 +36,8 @@ export interface Contact {
   type: string;
   contact: string | number;
 }
+
+export interface DeleteFunction {
+  item? : (userid : string, itemId : string) => void;
+  user? : (userid : string) => void;
+}

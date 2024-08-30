@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { Education, User } from "./definitions";
+import { Education, Skill, User } from "./definitions";
 
 export async function fetchUsers() {
   try {
@@ -29,5 +29,16 @@ export async function fetchEducations(userid : string) {
   } catch (error) {
     console.error("Database Error: ", error);
     throw new Error("Failed to fetch educations");
+  }
+}
+
+export async function fetchSkills(userid : string) {
+  try {
+    const data =
+      await sql<Skill>`SELECT * FROM skills WHERE user_id = ${userid}`;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error: ", error);
+    throw new Error("Failed to fetch skills");
   }
 }
