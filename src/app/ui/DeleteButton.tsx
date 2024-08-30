@@ -32,13 +32,17 @@ export default function DeleteBtn({
       confirmButtonText: "Delete",
       confirmButtonColor: "red",
       preConfirm: async () => {
-        if (itemId) {
-          deleteHandler.item!(userid, itemId);
-          return { message: `${itemName} deleted!` };
-        }
+        try {
+          if (itemId) {
+            deleteHandler.item!(userid, itemId);
+            return { message: `${itemName} deleted!` };
+          }
 
-        deleteHandler.user!(userid);
-        return { message: `${itemName} deleted!` };
+          deleteHandler.user!(userid);
+          return { message: `${itemName} deleted!` };
+        } catch (error) {
+          Swal.showValidationMessage(`Something went wrong: ${error}`)
+        }
       },
       showLoaderOnConfirm: true,
     }).then((result) => {

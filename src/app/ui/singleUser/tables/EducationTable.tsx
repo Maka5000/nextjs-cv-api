@@ -2,11 +2,11 @@ import { deleteEducation } from "@/app/lib/actions";
 import EducationForm from "../modals/forms/EducationForm";
 import TableModal from "../modals/tableModal";
 import { fetchEducations } from "@/app/lib/data";
+import DeleteBtn from "../../DeleteButton";
 
 export default async function EducationTable({
   userid,
 }: Readonly<{ userid: string }>) {
-
   const educations = await fetchEducations(userid);
 
   return (
@@ -61,16 +61,12 @@ export default async function EducationTable({
                       {ed.degree}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                      <form action={deleteEducation}>
-                        <input type="hidden" name="userid" value={ed.user_id} />
-                        <input type="hidden" name="edId" value={ed.id} />
-                        <button
-                          type="submit"
-                          className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-                        >
-                          Delete
-                        </button>
-                      </form>
+                      <DeleteBtn
+                        userid={ed.user_id}
+                        itemName={ed.program}
+                        itemId={ed.id}
+                        deleteHandler={{ item: deleteEducation }}
+                      />
                     </td>
                   </tr>
                 ))}

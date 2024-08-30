@@ -23,7 +23,7 @@ export async function createUser(formData: FormData) {
   redirect("/dashboard/users");
 }
 
-export async function deleteUser(userid : string) {
+export async function deleteUser(userid: string) {
   try {
     await sql`DELETE FROM users WHERE id = ${userid}`;
   } catch (error) {
@@ -56,18 +56,15 @@ export async function createEducation(formData: FormData) {
   revalidatePath(`/dashboard/users/${userId?.toString()}`);
 }
 
-export async function deleteEducation(formData: FormData) {
+export async function deleteEducation(userId: string, educationId: string) {
   try {
-    const userid = formData.get("userid");
-    const educationId = formData.get("edId");
-
-    await sql`DELETE FROM educations WHERE id = ${educationId?.toString()} AND user_id = ${userid?.toString()}`;
+    await sql`DELETE FROM educations WHERE id = ${educationId} AND user_id = ${userId}`;
   } catch (error) {
     console.error("Database error: ", error);
     throw new Error("Failed to delete Education.");
   }
 
-  revalidatePath("/dashboard/users");
+  revalidatePath(`/dashboard/users/${userId}`);
 }
 
 export async function createSkill(formData: FormData) {
@@ -99,6 +96,5 @@ export async function deleteSkill(userId: string, skillId: string) {
     throw new Error("Failed to delete Education.");
   }
 
-  revalidatePath(`/dashboard/users/${userId?.toString()}`);
-  return {message : `Deleted`}
+  revalidatePath(`/dashboard/users/${userId}`);
 }
