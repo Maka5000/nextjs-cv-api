@@ -1,9 +1,6 @@
-import { createSkill } from "@/app/lib/actions";
-
-export default function SkillsForm({ userid }: Readonly<{ userid: string }>) {
+export default function SkillsForm() {
   return (
-    <form action={createSkill} className="flex flex-col gap-y-5">
-      <input type="hidden" name="userid" value={userid} />
+    <div className="flex flex-col gap-y-5">
       <div>
         <label htmlFor="skillname">Name</label>
         <input
@@ -24,14 +21,6 @@ export default function SkillsForm({ userid }: Readonly<{ userid: string }>) {
           required
         />
       </div>
-      <div className="text-end">
-        <button
-          type="submit"
-          className="rounded-lg w-full max-w-32 bg-blue-500 text-white transition-colors hover:bg-blue-700"
-        >
-          Create
-        </button>
-      </div>
-    </form>
+    </div>
   );
 }

@@ -34,27 +34,25 @@ export default function DeleteBtn({
       preConfirm: async () => {
         try {
           if (itemId) {
-            deleteHandler.item!(userid, itemId);
+            await deleteHandler.item!(userid, itemId);
             return { message: `${itemName} deleted!` };
           }
 
-          deleteHandler.user!(userid);
+          await deleteHandler.user!(userid);
           return { message: `${itemName} deleted!` };
         } catch (error) {
-          Swal.showValidationMessage(`Something went wrong: ${error}`)
+          Swal.showValidationMessage(`Something went wrong: ${error}`);
         }
       },
       showLoaderOnConfirm: true,
     }).then((result) => {
-      if (result.value) {
-        if (result.value.message) {
-          MySwal.fire({
-            title: result.value.message,
-            icon: "success",
-            confirmButtonColor: "#1d4ed8",
-          });
-        }
-      }
+      if (result.isDismissed) return;
+
+      MySwal.fire({
+        title: result.value.message,
+        icon: "success",
+        confirmButtonColor: "#1d4ed8",
+      });
     });
   }
 

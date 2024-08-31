@@ -52,6 +52,7 @@ export default function CreateModal({
       },
       showLoaderOnConfirm: true,
     }).then((result) => {
+      if (result.isDismissed) return;
       MySwal.fire({
         title: "Created",
         icon: "success",

@@ -1,8 +1,8 @@
 import { fetchSkills } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 import SkillsForm from "../modals/forms/SkillsForm";
-import TableModal from "../modals/CreateButton";
-import { deleteSkill } from "@/app/lib/actions";
+import CreateButton from "../modals/CreateButton";
+import { createSkill, deleteSkill } from "@/app/lib/actions";
 
 export default async function SkillsTable({
   userid,
@@ -39,9 +39,14 @@ export default async function SkillsTable({
                     scope="col"
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
-                    <TableModal btnTitle="Add Skill" modalTitle="Add Skill">
-                      <SkillsForm userid={userid} />
-                    </TableModal>
+                    <CreateButton
+                      userid={userid}
+                      btnTitle="Add Skill"
+                      modalTitle="Add Skill"
+                      createHandler={createSkill}
+                    >
+                      <SkillsForm />
+                    </CreateButton>
                   </th>
                 </tr>
               </thead>

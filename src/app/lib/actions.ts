@@ -63,22 +63,19 @@ export async function deleteEducation(userId: string, educationId: string) {
   revalidatePath(`/dashboard/users/${userId}`);
 }
 
-export async function createSkill(formData: FormData) {
-  const userId = formData.get("userid");
-  // const iconURL = formData.get("iconUrl");
-  const skillName = formData.get("skillname");
-  const skillLevel = formData.get("level");
+export async function createSkill(userId: string, ...args: string[]) {
   try {
     await sql`
     INSERT INTO Skills VALUES (
       uuid_generate_v4(),
-      ${userId?.toString()},
+      ${userId},
       'iconUrl',
-      ${skillName?.toString()},
-      ${skillLevel?.toString()}
+      ${args[0]},
+      ${args[1]}
     );`;
   } catch (error) {
     console.log(error);
+    throw new Error("Failed to create Skill.");
   }
 
   revalidatePath(`/dashboard/users/${userId?.toString()}`);
