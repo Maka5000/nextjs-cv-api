@@ -1,4 +1,14 @@
-export default async function ProjectsTable() {
+import { fetchProjects } from "@/app/lib/data";
+import DeleteBtn from "../../DeleteButton";
+import { createProject, deleteProject } from "@/app/lib/actions";
+import CreateButton from "../modals/CreateButton";
+import ProjectsForm from "../modals/forms/ProjectsForm";
+
+export default async function ProjectsTable({
+  userid,
+}: Readonly<{ userid: string }>) {
+  const projects = await fetchProjects(userid);
+
   return (
     <div className="flex flex-col">
       <div className="-m-1.5 overflow-x-auto">
@@ -29,29 +39,39 @@ export default async function ProjectsTable() {
                     scope="col"
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
+                    <CreateButton
+                      btnTitle="Create Project"
+                      modalTitle="Create Project"
+                      userid={userid}
+                      createHandler={createProject}
+                    >
+                      <ProjectsForm />
+                    </CreateButton>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                    Momentum
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                    Picture
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                    url.com
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                {projects.map((project) => (
+                  <tr key={project.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                      {project.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {project.imageurl}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {project.link}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                      <DeleteBtn
+                        userid={project.user_id}
+                        itemId={project.id}
+                        itemName={project.name}
+                        deleteHandler={{ item: deleteProject }}
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

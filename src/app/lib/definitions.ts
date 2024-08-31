@@ -25,14 +25,14 @@ export interface Project {
   id: string;
   user_id: string;
   name: string;
-  imageURL: string;
+  imageurl: string;
   link: string;
 }
 
 export interface Contact {
   id: string;
   user_id: string;
-  iconURL: string;
+  iconurl: string;
   type: string;
   contact: string | number;
 }

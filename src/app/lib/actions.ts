@@ -78,7 +78,7 @@ export async function createSkill(userId: string, ...args: string[]) {
     throw new Error("Failed to create Skill.");
   }
 
-  revalidatePath(`/dashboard/users/${userId?.toString()}`);
+  revalidatePath(`/dashboard/users/${userId}`);
 }
 
 export async function deleteSkill(userId: string, skillId: string) {
@@ -87,6 +87,35 @@ export async function deleteSkill(userId: string, skillId: string) {
   } catch (error) {
     console.error("Database error: ", error);
     throw new Error("Failed to delete Education.");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}
+
+export async function createProject(userId: string, ...args: string[]) {
+  try {
+    await sql`
+    INSERT INTO projects VALUES (
+      uuid_generate_v4(),
+      ${userId},
+      ${args[0]},
+      'image URL',
+      ${args[1]}
+    );`;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to create Project.");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}
+
+export async function deleteProject(userId: string, projectId: string) {
+  try {
+    await sql`DELETE FROM projects WHERE id = ${projectId} AND user_id = ${userId}`;
+  } catch (error) {
+    console.error("Database error: ", error);
+    throw new Error("Failed to delete Project.");
   }
 
   revalidatePath(`/dashboard/users/${userId}`);

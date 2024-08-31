@@ -1,11 +1,10 @@
 "use client";
 
-import { createEducation } from "@/app/lib/actions";
 import { CreateFunction } from "@/app/lib/definitions";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-export default function CreateModal({
+export default function CreateButton({
   children,
   btnTitle,
   modalTitle,

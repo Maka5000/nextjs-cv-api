@@ -5,8 +5,11 @@ import LanguagesTable from "@/app/ui/singleUser/tables/LanguagesTable";
 import ProjectsTable from "@/app/ui/singleUser/tables/ProjectsTable";
 import SkillsTable from "@/app/ui/singleUser/tables/SkillsTable";
 
-export default async function SingleUserPage({ params } : { params : {id : string} }) {
-
+export default async function SingleUserPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const user = await fetchUserByID(params.id);
 
   return (
@@ -19,15 +22,13 @@ export default async function SingleUserPage({ params } : { params : {id : strin
           title="Vecteezy.com"
         />
         <div>
-          <h2 className="text-4xl">{ user.name }</h2>
-          <span> id: { user.id } </span>
+          <h2 className="text-4xl">{user.name}</h2>
+          <span> id: {user.id} </span>
         </div>
       </div>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">About me</h3>
-        <p>
-          { user.about }
-        </p>
+        <p>{user.about}</p>
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Education</h3>
@@ -39,7 +40,7 @@ export default async function SingleUserPage({ params } : { params : {id : strin
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Projects</h3>
-        <ProjectsTable />
+        <ProjectsTable userid={params.id} />
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Contacts</h3>
