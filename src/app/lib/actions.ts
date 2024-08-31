@@ -34,26 +34,22 @@ export async function deleteUser(userid: string) {
   revalidatePath("/dashboard/users");
 }
 
-export async function createEducation(formData: FormData) {
-  const userId = formData.get("userid");
-  const establishment = formData.get("establishment");
-  const EdProgram = formData.get("program");
-  const EdDegree = formData.get("degree");
+export async function createEducation(userId: string, ...args: string[]) {
   try {
     await sql`
     INSERT INTO Educations VALUES (
       uuid_generate_v4(),
-      ${userId?.toString()},
-      ${establishment?.toString()},
-      ${EdProgram?.toString()},
-      ${EdDegree?.toString()}
+      ${userId},
+      ${args[0]},
+      ${args[1]},
+      ${args[2]}
     );
     `;
   } catch (error) {
     console.log(error);
   }
 
-  revalidatePath(`/dashboard/users/${userId?.toString()}`);
+  revalidatePath(`/dashboard/users/${userId}`);
 }
 
 export async function deleteEducation(userId: string, educationId: string) {

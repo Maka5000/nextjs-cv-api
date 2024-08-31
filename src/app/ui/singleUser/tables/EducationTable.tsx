@@ -1,6 +1,6 @@
-import { deleteEducation } from "@/app/lib/actions";
+import { createEducation, deleteEducation } from "@/app/lib/actions";
 import EducationForm from "../modals/forms/EducationForm";
-import TableModal from "../modals/tableModal";
+import CreateButton from "../modals/CreateButton";
 import { fetchEducations } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 
@@ -39,12 +39,14 @@ export default async function EducationTable({
                     scope="col"
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
-                    <TableModal
+                    <CreateButton
                       modalTitle="Add Education"
                       btnTitle="Add Education"
+                      userid={userid}
+                      createHandler={createEducation}
                     >
-                      <EducationForm userid={userid} />
-                    </TableModal>
+                      <EducationForm />
+                    </CreateButton>
                   </th>
                 </tr>
               </thead>

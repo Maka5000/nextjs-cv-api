@@ -1,9 +1,6 @@
-import { createEducation } from "@/app/lib/actions";
-
-export default function EducationForm({ userid }: { userid: string }) {
+export default function EducationForm() {
   return (
-    <form action={createEducation} className="flex flex-col gap-y-5">
-      <input type="hidden" name="userid" value={userid} />
+    <div className="flex flex-col gap-y-5">
       <div>
         <label htmlFor="establishment">Establishment</label>
         <input
@@ -14,7 +11,12 @@ export default function EducationForm({ userid }: { userid: string }) {
         />
       </div>
       <div>
-        <label htmlFor="program">Program</label>
+        <label
+          htmlFor="program"
+          className="after:content-['*'] after:ml-0.5 after:text-red-500"
+        >
+          Program
+        </label>
         <input
           type="text"
           id="program"
@@ -22,6 +24,9 @@ export default function EducationForm({ userid }: { userid: string }) {
           className="block border-2 rounded-xl text-sm px-3 w-full"
           required
         />
+        <span id="program-subtitle" className="hidden text-sm text-red-500">
+          Please fill this field
+        </span>
       </div>
       <div>
         <label htmlFor="degree">Degree</label>
@@ -32,14 +37,6 @@ export default function EducationForm({ userid }: { userid: string }) {
           className="block border-2 rounded-xl text-sm px-3 w-full"
         />
       </div>
-      <div className="text-end">
-        <button
-          type="submit"
-          className="rounded-lg w-full max-w-32 bg-blue-500 text-white transition-colors hover:bg-blue-700"
-        >
-          Create
-        </button>
-      </div>
-    </form>
+    </div>
   );
 }

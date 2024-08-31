@@ -7,10 +7,10 @@ export interface User {
 
 export interface Education {
   id: string;
-  user_id : string;
-  establishment : string;
-  program : string;
-  degree : string;
+  user_id: string;
+  establishment: string;
+  program: string;
+  degree: string;
 }
 
 export interface Skill {
@@ -38,6 +38,8 @@ export interface Contact {
 }
 
 export interface DeleteFunction {
-  item? : (userid : string, itemId : string) => void;
-  user? : (userid : string) => void;
+  item?: (userid: string, itemId: string) => void;
+  user?: (userid: string) => void;
 }
+
+export type CreateFunction = (userid: string, ...args: string[]) => void;

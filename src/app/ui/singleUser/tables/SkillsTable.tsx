@@ -1,7 +1,7 @@
 import { fetchSkills } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 import SkillsForm from "../modals/forms/SkillsForm";
-import TableModal from "../modals/tableModal";
+import TableModal from "../modals/CreateButton";
 import { deleteSkill } from "@/app/lib/actions";
 
 export default async function SkillsTable({
