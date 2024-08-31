@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { Contact, Education, Project, Skill, User } from "./definitions";
+import { Contact, Education, Language, Project, Skill, User } from "./definitions";
 
 export async function fetchUsers() {
   try {
@@ -59,6 +59,17 @@ export async function fetchContacts(userid: string) {
   try {
     const data =
       await sql<Contact>`SELECT * FROM contacts WHERE user_id = ${userid}`;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error: ", error);
+    throw new Error("Failed to fetch contacts");
+  }
+}
+
+export async function fetchLanguages(userid: string) {
+  try {
+    const data =
+      await sql<Language>`SELECT * FROM languages WHERE user_id = ${userid}`;
     return data.rows;
   } catch (error) {
     console.error("Database Error: ", error);

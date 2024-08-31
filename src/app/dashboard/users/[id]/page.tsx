@@ -48,7 +48,7 @@ export default async function SingleUserPage({
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Languages</h3>
-        <LanguagesTable />
+        <LanguagesTable userid={params.id} />
       </section>
     </div>
   );

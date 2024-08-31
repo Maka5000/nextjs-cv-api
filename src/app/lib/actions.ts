@@ -149,3 +149,31 @@ export async function deleteContact(userId: string, contactId: string) {
 
   revalidatePath(`/dashboard/users/${userId}`);
 }
+
+export async function createLanguage(userId: string, ...args: string[]) {
+  try {
+    await sql`
+    INSERT INTO languages VALUES (
+      uuid_generate_v4(),
+      ${userId},
+      ${args[0]},
+      ${args[1]}
+    );`;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to create Language.");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}
+
+export async function deleteLanguage(userId: string, langId: string) {
+  try {
+    await sql`DELETE FROM languages WHERE id = ${langId} AND user_id = ${userId}`;
+  } catch (error) {
+    console.error("Database error: ", error);
+    throw new Error("Failed to delete Language.");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}

@@ -37,6 +37,21 @@ export interface Contact {
   contact: string;
 }
 
+export interface Language {
+  id: string;
+  user_id: string;
+  language: string;
+  level: string;
+}
+
+export interface Job {
+  id: string;
+  user_id: string;
+  company: string;
+  position: string;
+  experience: string;
+}
+
 export interface DeleteFunction {
   item?: (userid: string, itemId: string) => void;
   user?: (userid: string) => void;
