@@ -34,7 +34,7 @@ export interface Contact {
   user_id: string;
   iconurl: string;
   type: string;
-  contact: string | number;
+  contact: string;
 }
 
 export interface DeleteFunction {

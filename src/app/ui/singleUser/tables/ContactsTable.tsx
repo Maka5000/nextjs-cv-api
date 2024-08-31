@@ -1,4 +1,14 @@
-export default async function ContactsTable() {
+import { fetchContacts } from "@/app/lib/data";
+import DeleteBtn from "../../DeleteButton";
+import { createContact, deleteContact } from "@/app/lib/actions";
+import CreateButton from "../modals/CreateButton";
+import ContactsForm from "../modals/forms/ContactsForm";
+
+export default async function ContactsTable({
+  userid,
+}: Readonly<{ userid: string }>) {
+  const contacts = await fetchContacts(userid);
+
   return (
     <div className="flex flex-col">
       <div className="-m-1.5 overflow-x-auto">
@@ -29,29 +39,39 @@ export default async function ContactsTable() {
                     scope="col"
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
+                    <CreateButton
+                      btnTitle="Create Contact"
+                      modalTitle="Create Contact"
+                      userid={userid}
+                      createHandler={createContact}
+                    >
+                      <ContactsForm />
+                    </CreateButton>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                    Icon
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                    Phone
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                    7 775 796 3210
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                {contacts.map((contact) => (
+                  <tr key={contact.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                      {contact.iconurl}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {contact.type}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                      {contact.contact}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                      <DeleteBtn
+                        userid={contact.user_id}
+                        itemId={contact.id}
+                        itemName={contact.contact}
+                        deleteHandler={{ item: deleteContact }}
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

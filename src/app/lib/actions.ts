@@ -120,3 +120,32 @@ export async function deleteProject(userId: string, projectId: string) {
 
   revalidatePath(`/dashboard/users/${userId}`);
 }
+
+export async function createContact(userId: string, ...args: string[]) {
+  try {
+    await sql`
+    INSERT INTO contacts VALUES (
+      uuid_generate_v4(),
+      ${userId},
+      'icon URL',
+      ${args[0]},
+      ${args[1]}
+    );`;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to create Contact.");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}
+
+export async function deleteContact(userId: string, contactId: string) {
+  try {
+    await sql`DELETE FROM contacts WHERE id = ${contactId} AND user_id = ${userId}`;
+  } catch (error) {
+    console.error("Database error: ", error);
+    throw new Error("Failed to delete Contact.");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}
