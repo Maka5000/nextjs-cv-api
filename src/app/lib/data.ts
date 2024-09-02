@@ -1,5 +1,13 @@
 import { sql } from "@vercel/postgres";
-import { Contact, Education, Language, Project, Skill, User } from "./definitions";
+import {
+  Contact,
+  Education,
+  Language,
+  Project,
+  Skill,
+  User,
+} from "./definitions";
+import { revalidatePath } from "next/cache";
 
 export async function fetchUsers() {
   try {
@@ -74,5 +82,49 @@ export async function fetchLanguages(userid: string) {
   } catch (error) {
     console.error("Database Error: ", error);
     throw new Error("Failed to fetch contacts");
+  }
+}
+
+export async function fetchCardData() {
+  try {
+    const usersCountPromise = sql`SELECT COUNT(*) FROM users`;
+    const educationsCountPromise = sql`SELECT COUNT(*) FROM educations`;
+    const skillsCountPromise = sql`SELECT COUNT(*) FROM skills`;
+    const projectsCountPromise = sql`SELECT COUNT(*) FROM projects`;
+    const contactsCountPromise = sql`SELECT COUNT(*) FROM contacts`;
+    const jobsCountPromise = sql`SELECT COUNT(*) FROM jobs`;
+    const langsCountPromise = sql`SELECT COUNT(*) FROM languages`;
+
+    const data = await Promise.all([
+      usersCountPromise,
+      educationsCountPromise,
+      skillsCountPromise,
+      projectsCountPromise,
+      contactsCountPromise,
+      jobsCountPromise,
+      langsCountPromise,
+    ]);
+
+    const numberOfUsers = Number(data[0].rows[0].count ?? "0");
+    const numberOfEducations = Number(data[1].rows[0].count ?? "0");
+    const numberOfSkills = Number(data[2].rows[0].count ?? "0");
+    const numberOfProjects = Number(data[3].rows[0].count ?? "0");
+    const numberOfContacts = Number(data[4].rows[0].count ?? "0");
+    const numberOfJobs = Number(data[5].rows[0].count ?? "0");
+    const numberOfLangs = Number(data[6].rows[0].count ?? "0");
+
+    revalidatePath("/dashboard");
+    return [
+      { name: "Users", count: numberOfUsers },
+      { name: "Educations", count: numberOfEducations },
+      { name: "Skills", count: numberOfSkills },
+      { name: "Projects", count: numberOfProjects },
+      { name: "Contacts", count: numberOfContacts },
+      { name: "Jobs", count: numberOfJobs },
+      { name: "Languages", count: numberOfLangs },
+    ];
+  } catch (error) {
+    console.error(`Database Error: `, error);
+    throw new Error("Failed to fetch table length");
   }
 }
