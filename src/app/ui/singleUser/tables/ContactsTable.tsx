@@ -40,8 +40,8 @@ export default async function ContactsTable({
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
                     <CreateButton
-                      btnTitle="Create Contact"
-                      modalTitle="Create Contact"
+                      btnTitle="Add Contact"
+                      modalTitle="Add Contact"
                       userid={userid}
                       createHandler={createContact}
                     >

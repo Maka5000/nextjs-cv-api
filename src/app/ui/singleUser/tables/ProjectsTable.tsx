@@ -40,8 +40,8 @@ export default async function ProjectsTable({
                     className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"
                   >
                     <CreateButton
-                      btnTitle="Create Project"
-                      modalTitle="Create Project"
+                      btnTitle="Add Project"
+                      modalTitle="Add Project"
                       userid={userid}
                       createHandler={createProject}
                     >
