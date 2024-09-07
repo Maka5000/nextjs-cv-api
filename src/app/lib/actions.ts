@@ -3,6 +3,7 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { imageType } from "./definitions";
 
 export async function createUser(formData: FormData) {
   const userName = formData.get("username");
@@ -63,13 +64,17 @@ export async function deleteEducation(userId: string, educationId: string) {
   revalidatePath(`/dashboard/users/${userId}`);
 }
 
-export async function createSkill(userId: string, ...args: string[]) {
+export async function createSkill(
+  userId: string,
+  inputFileName?: string,
+  ...args: string[]
+) {
   try {
     await sql`
     INSERT INTO Skills VALUES (
       uuid_generate_v4(),
       ${userId},
-      'iconUrl',
+      ${inputFileName ?? null},
       ${args[0]},
       ${args[1]}
     );`;

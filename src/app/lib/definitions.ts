@@ -16,7 +16,7 @@ export interface Education {
 export interface Skill {
   id: string;
   user_id: string;
-  iconURL: string;
+  iconurl: string;
   name: string;
   level: string;
 }
@@ -57,4 +57,10 @@ export interface DeleteFunction {
   user?: (userid: string) => void;
 }
 
-export type CreateFunction = (userid: string, ...args: string[]) => void;
+export type CreateFunction = (
+  userid: string,
+  inputFileName?: string,
+  ...args: string[]
+) => void;
+
+export type imageType = "skills-icon" | "contacts-icon" | "projects-image";

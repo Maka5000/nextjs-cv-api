@@ -1,7 +1,7 @@
 import { fetchContacts } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 import { createContact, deleteContact } from "@/app/lib/actions";
-import CreateButton from "../modals/CreateButton";
+import CreateButton from "../../CreateButton";
 import ContactsForm from "../modals/forms/ContactsForm";
 
 export default async function ContactsTable({

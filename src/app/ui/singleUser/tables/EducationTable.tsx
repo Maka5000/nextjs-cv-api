@@ -1,6 +1,6 @@
 import { createEducation, deleteEducation } from "@/app/lib/actions";
 import EducationForm from "../modals/forms/EducationForm";
-import CreateButton from "../modals/CreateButton";
+import CreateButton from "../../CreateButton";
 import { fetchEducations } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 

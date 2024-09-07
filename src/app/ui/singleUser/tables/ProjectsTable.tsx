@@ -1,7 +1,7 @@
 import { fetchProjects } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 import { createProject, deleteProject } from "@/app/lib/actions";
-import CreateButton from "../modals/CreateButton";
+import CreateButton from "../../CreateButton";
 import ProjectsForm from "../modals/forms/ProjectsForm";
 
 export default async function ProjectsTable({

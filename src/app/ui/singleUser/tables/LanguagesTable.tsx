@@ -1,7 +1,7 @@
 import { fetchLanguages } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 import { createLanguage, deleteLanguage } from "@/app/lib/actions";
-import CreateButton from "../modals/CreateButton";
+import CreateButton from "../../CreateButton";
 import LanguagesForm from "../modals/forms/LanguagesForm";
 
 export default async function LanguagesTable({

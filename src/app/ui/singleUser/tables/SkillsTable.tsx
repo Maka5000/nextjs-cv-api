@@ -1,7 +1,7 @@
 import { fetchSkills } from "@/app/lib/data";
 import DeleteBtn from "../../DeleteButton";
 import SkillsForm from "../modals/forms/SkillsForm";
-import CreateButton from "../modals/CreateButton";
+import CreateButton from "../../CreateButton";
 import { createSkill, deleteSkill } from "@/app/lib/actions";
 
 export default async function SkillsTable({
@@ -44,6 +44,7 @@ export default async function SkillsTable({
                       btnTitle="Add Skill"
                       modalTitle="Add Skill"
                       createHandler={createSkill}
+                      imageType="skills-icon"
                     >
                       <SkillsForm />
                     </CreateButton>
@@ -54,7 +55,15 @@ export default async function SkillsTable({
                 {skills.map((skill) => (
                   <tr key={skill.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                      Icon
+                      {skill.iconurl ? (
+                        <img
+                          src={`https://${skill.iconurl}`}
+                          alt={skill.name}
+                          className="w-full max-w-8"
+                        />
+                      ) : (
+                        <span>Not set</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       {skill.name}
@@ -68,6 +77,7 @@ export default async function SkillsTable({
                         itemId={skill.id}
                         deleteHandler={{ item: deleteSkill }}
                         itemName={skill.name}
+                        iconURL={skill.iconurl}
                       />
                     </td>
                   </tr>

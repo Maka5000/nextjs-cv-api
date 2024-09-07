@@ -2,28 +2,50 @@
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { DeleteFunction } from "../lib/definitions";
+import { DeleteFunction, imageType } from "../lib/definitions";
+import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 
 export default function DeleteBtn({
   userid,
   itemId,
   itemName,
   deleteHandler,
+  iconURL,
 }: Readonly<{
   userid: string;
   itemId?: string;
   itemName: string;
   deleteHandler: DeleteFunction;
+  iconURL?: string;
 }>) {
   const MySwal = withReactContent(Swal);
+
+  async function S3DeleteImage(imageKey: string) {
+    const s3Client = new S3Client({
+      region: "eu-north-1",
+      credentials: fromCognitoIdentityPool({
+        clientConfig: { region: "eu-north-1" },
+        identityPoolId: "eu-north-1:d6ca6804-100a-4df1-a9a6-9bdd5e59d7e7",
+      }),
+    });
+
+    const command = new DeleteObjectCommand({
+      Key: imageKey,
+      Bucket: "cv-api-bucket",
+    });
+
+    await s3Client.send(command);
+  }
 
   function openModal() {
     MySwal.fire({
       title: "Are you sure?",
       html: (
         <div>
-          Do you really want to delete{" "}
-          <span className="text-red-500">{itemName}</span> ?{" "}
+          <span>Do you really want to delete </span>
+          <span className="text-red-500">{itemName}</span>
+          <span> ? </span>
         </div>
       ),
       icon: "warning",
@@ -34,6 +56,14 @@ export default function DeleteBtn({
       preConfirm: async () => {
         try {
           if (itemId) {
+            if (iconURL) {
+              const splittedIconUrl = iconURL?.split("/");
+              splittedIconUrl?.shift();
+
+              const iconKey = splittedIconUrl!.join("/");
+              S3DeleteImage(iconKey);
+            }
+
             await deleteHandler.item!(userid, itemId);
             return { message: `${itemName} deleted!` };
           }

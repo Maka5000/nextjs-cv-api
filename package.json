@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.645.0",
+    "@aws-sdk/credential-providers": "^3.645.0",
     "@vercel/postgres": "^0.9.0",
     "next": "14.2.6",
     "react": "^18",
