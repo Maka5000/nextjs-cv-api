@@ -37,7 +37,7 @@ export default async function LanguagesTable({
                       btnTitle="Add Language"
                       modalTitle="Add Language"
                       userid={userid}
-                      createHandler={createLanguage}
+                      createHandler={{item : createLanguage}}
                     >
                       <LanguagesForm />
                     </CreateButton>

@@ -43,7 +43,7 @@ export default async function ProjectsTable({
                       btnTitle="Add Project"
                       modalTitle="Add Project"
                       userid={userid}
-                      createHandler={createProject}
+                      createHandler={{item : createProject}}
                     >
                       <ProjectsForm />
                     </CreateButton>

@@ -43,7 +43,7 @@ export default async function SkillsTable({
                       userid={userid}
                       btnTitle="Add Skill"
                       modalTitle="Add Skill"
-                      createHandler={createSkill}
+                      createHandler={{withImage : createSkill}}
                       imageType="skills-icon"
                     >
                       <SkillsForm />

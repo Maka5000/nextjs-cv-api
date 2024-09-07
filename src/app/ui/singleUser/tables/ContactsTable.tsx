@@ -43,7 +43,7 @@ export default async function ContactsTable({
                       btnTitle="Add Contact"
                       modalTitle="Add Contact"
                       userid={userid}
-                      createHandler={createContact}
+                      createHandler={{item : createContact}}
                     >
                       <ContactsForm />
                     </CreateButton>

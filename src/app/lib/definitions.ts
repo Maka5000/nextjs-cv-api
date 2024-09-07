@@ -57,10 +57,13 @@ export interface DeleteFunction {
   user?: (userid: string) => void;
 }
 
-export type CreateFunction = (
-  userid: string,
-  inputFileName?: string,
-  ...args: string[]
-) => void;
+export interface CreateFunction {
+  item?: (userid: string, ...args: string[]) => void;
+  withImage?: (
+    userid: string,
+    inputFileName: string,
+    ...args: string[]
+  ) => void;
+}
 
 export type imageType = "skills-icon" | "contacts-icon" | "projects-image";

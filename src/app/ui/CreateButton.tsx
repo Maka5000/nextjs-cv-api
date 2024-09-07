@@ -84,15 +84,20 @@ export default function CreateButton({
             }
           }
 
-          await createHandler(
-            userid,
-            inputFiles?.length
-              ? `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${
-                  inputFiles![0].name
-                }`
-              : undefined,
-            ...inputValues
-          );
+          const inputFileName = inputFiles?.length ? 
+            `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${inputFiles![0].name}` 
+            : 
+            undefined;
+
+          if (createHandler.item) {
+            await createHandler.item(userid, ...inputValues);
+          } else if (createHandler.withImage) {
+            await createHandler.withImage(
+              userid,
+              inputFileName!,
+              ...inputValues
+            );
+          }
           return { message: `${inputValues[1]} created!` };
         }
       },

@@ -43,7 +43,7 @@ export default async function EducationTable({
                       modalTitle="Add Education"
                       btnTitle="Add Education"
                       userid={userid}
-                      createHandler={createEducation}
+                      createHandler={{item : createEducation}}
                     >
                       <EducationForm />
                     </CreateButton>
