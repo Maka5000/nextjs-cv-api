@@ -1,3 +1,5 @@
+import FileChooser from "@/app/ui/FileChooser";
+
 export default function ContactsForm() {
   return (
     <div className="flex flex-col gap-y-5">
@@ -24,6 +26,9 @@ export default function ContactsForm() {
           className="block border-2 rounded-xl text-sm px-3 w-full"
           required
         />
+      </div>
+      <div>
+        <FileChooser />
       </div>
     </div>
   );

@@ -137,13 +137,17 @@ export async function deleteProject(userId: string, projectId: string) {
   revalidatePath(`/dashboard/users/${userId}`);
 }
 
-export async function createContact(userId: string, ...args: string[]) {
+export async function createContact(
+  userId: string,
+  inputFileName?: string,
+  ...args: string[]
+) {
   try {
     await sql`
     INSERT INTO contacts VALUES (
       uuid_generate_v4(),
       ${userId},
-      'icon URL',
+      ${inputFileName ?? null},
       ${args[0]},
       ${args[1]}
     );`;

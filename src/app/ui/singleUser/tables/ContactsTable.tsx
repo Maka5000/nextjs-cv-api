@@ -43,7 +43,8 @@ export default async function ContactsTable({
                       btnTitle="Add Contact"
                       modalTitle="Add Contact"
                       userid={userid}
-                      createHandler={{item : createContact}}
+                      createHandler={{ withImage: createContact }}
+                      imageType="contacts-icon"
                     >
                       <ContactsForm />
                     </CreateButton>
@@ -54,7 +55,15 @@ export default async function ContactsTable({
                 {contacts.map((contact) => (
                   <tr key={contact.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                      {contact.iconurl}
+                      {contact.iconurl ? (
+                        <img
+                          src={`https://${contact.iconurl}`}
+                          alt={contact.type}
+                          className="w-full max-w-8"
+                        />
+                      ) : (
+                        <span>Not set</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       {contact.type}
@@ -68,6 +77,7 @@ export default async function ContactsTable({
                         itemId={contact.id}
                         itemName={contact.contact}
                         deleteHandler={{ item: deleteContact }}
+                        iconURL={contact.iconurl}
                       />
                     </td>
                   </tr>
