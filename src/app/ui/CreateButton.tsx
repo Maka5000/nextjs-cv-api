@@ -75,20 +75,19 @@ export default function CreateButton({
           }
         });
 
-        const inputFiles = inputFields[2].files;
 
         if (inputValues.length === inputFields.length) {
+          
+          let inputFiles;
+          let inputFileName;
+
           if (imageType) {
+            inputFiles = inputFields[2].files;
             if (inputFiles?.length) {
+              inputFileName = `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${inputFiles![0].name}`
               await S3UploadImage(userid, inputFiles[0], imageType);
             }
           }
-
-          const inputFileName = inputFiles?.length
-            ? 
-            `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${inputFiles![0].name}`
-            : 
-            undefined;
 
           if (createHandler.item) {
             await createHandler.item(userid, ...inputValues);
