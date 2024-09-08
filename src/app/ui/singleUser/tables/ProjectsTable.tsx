@@ -43,7 +43,8 @@ export default async function ProjectsTable({
                       btnTitle="Add Project"
                       modalTitle="Add Project"
                       userid={userid}
-                      createHandler={{item : createProject}}
+                      createHandler={{ withImage: createProject }}
+                      imageType="projects-image"
                     >
                       <ProjectsForm />
                     </CreateButton>
@@ -57,7 +58,15 @@ export default async function ProjectsTable({
                       {project.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {project.imageurl}
+                      {project.imageurl ? (
+                        <img
+                          src={`https://${project.imageurl}`}
+                          alt={project.name}
+                          className="w-full max-w-8"
+                        />
+                      ) : (
+                        <span>Not set</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       {project.link}
@@ -68,6 +77,7 @@ export default async function ProjectsTable({
                         itemId={project.id}
                         itemName={project.name}
                         deleteHandler={{ item: deleteProject }}
+                        iconURL={project.imageurl}
                       />
                     </td>
                   </tr>

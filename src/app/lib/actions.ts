@@ -102,14 +102,18 @@ export async function deleteSkill(userId: string, skillId: string) {
   revalidatePath(`/dashboard/users/${userId}`);
 }
 
-export async function createProject(userId: string, ...args: string[]) {
+export async function createProject(
+  userId: string,
+  inputFileName?: string,
+  ...args: string[]
+) {
   try {
     await sql`
     INSERT INTO projects VALUES (
       uuid_generate_v4(),
       ${userId},
       ${args[0]},
-      'image URL',
+      ${inputFileName ?? null},
       ${args[1]}
     );`;
   } catch (error) {

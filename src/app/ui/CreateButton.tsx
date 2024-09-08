@@ -80,12 +80,13 @@ export default function CreateButton({
         if (inputValues.length === inputFields.length) {
           if (imageType) {
             if (inputFiles?.length) {
-              S3UploadImage(userid, inputFiles[0], imageType);
+              await S3UploadImage(userid, inputFiles[0], imageType);
             }
           }
 
-          const inputFileName = inputFiles?.length ? 
-            `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${inputFiles![0].name}` 
+          const inputFileName = inputFiles?.length
+            ? 
+            `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${inputFiles![0].name}`
             : 
             undefined;
 

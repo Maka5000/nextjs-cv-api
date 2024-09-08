@@ -61,7 +61,7 @@ export default function DeleteBtn({
               splittedIconUrl?.shift();
 
               const iconKey = splittedIconUrl!.join("/");
-              S3DeleteImage(iconKey);
+              await S3DeleteImage(iconKey);
             }
 
             await deleteHandler.item!(userid, itemId);
