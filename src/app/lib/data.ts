@@ -7,7 +7,6 @@ import {
   Skill,
   User,
 } from "./definitions";
-import { revalidatePath } from "next/cache";
 
 export async function fetchUsers() {
   try {
@@ -113,7 +112,6 @@ export async function fetchCardData() {
     const numberOfJobs = Number(data[5].rows[0].count ?? "0");
     const numberOfLangs = Number(data[6].rows[0].count ?? "0");
 
-    revalidatePath("/dashboard");
     return [
       { name: "Users", count: numberOfUsers },
       { name: "Educations", count: numberOfEducations },
