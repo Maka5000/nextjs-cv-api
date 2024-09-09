@@ -70,7 +70,7 @@ export default function CreateButton({
             field.style.borderColor = "red";
             MySwal.showValidationMessage("Please fill all fields!");
           } else {
-            field.style.borderColor = "initial";
+            field.style.borderColor = "";
             inputValues.push(field.value);
           }
         });

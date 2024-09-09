@@ -4,6 +4,8 @@ import EducationTable from "@/app/ui/singleUser/tables/EducationTable";
 import LanguagesTable from "@/app/ui/singleUser/tables/LanguagesTable";
 import ProjectsTable from "@/app/ui/singleUser/tables/ProjectsTable";
 import SkillsTable from "@/app/ui/singleUser/tables/SkillsTable";
+import TableSkeleton from "@/app/ui/skeletons/TableSkeleton";
+import { Suspense } from "react";
 
 export default async function SingleUserPage({
   params,
@@ -32,23 +34,33 @@ export default async function SingleUserPage({
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Education</h3>
-        <EducationTable userid={params.id} />
+        <Suspense fallback={<TableSkeleton />}>
+          <EducationTable userid={params.id} />
+        </Suspense>
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Skills</h3>
-        <SkillsTable userid={params.id} />
+        <Suspense fallback={<TableSkeleton />}>
+          <SkillsTable userid={params.id} />
+        </Suspense>
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Projects</h3>
-        <ProjectsTable userid={params.id} />
+        <Suspense fallback={<TableSkeleton />}>
+          <ProjectsTable userid={params.id} />
+        </Suspense>
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Contacts</h3>
-        <ContactsTable userid={params.id} />
+        <Suspense fallback={<TableSkeleton />}>
+          <ContactsTable userid={params.id} />
+        </Suspense>
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Languages</h3>
-        <LanguagesTable userid={params.id} />
+        <Suspense fallback={<TableSkeleton />}>
+          <LanguagesTable userid={params.id} />
+        </Suspense>
       </section>
     </div>
   );

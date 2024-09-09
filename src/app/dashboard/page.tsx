@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import InfoChip from "../ui/dashboard/InfoChip";
 import { fetchCardData } from "../lib/data";
+import TableSkeleton from "../ui/skeletons/TableSkeleton";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -12,7 +13,7 @@ export default async function Dashboard() {
   return (
     <div className="text-center">
       <h2 className="text-5xl">Info</h2>
-      <section className="grid grid-cols-5 gap-3">
+      <section className="grid grid-cols-5 gap-3 mt-5">
         {cardData.map((data, index) => (
           <InfoChip
             key={index}
@@ -22,7 +23,7 @@ export default async function Dashboard() {
           />
         ))}
       </section>
-      <section>
+      <section className="mt-10">
         <div>This page was created using</div>
       </section>
     </div>
