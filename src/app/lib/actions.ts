@@ -212,3 +212,15 @@ export async function changeUserAvatar(userId: string, avatar_url: string) {
 
   revalidatePath(`/dashboard/users/${userId}`);
 }
+
+export async function changeUserName(userId: string, newUserName: string) {
+  try {
+    await sql`UPDATE users SET name = ${newUserName} WHERE id = ${userId}`;
+  } catch (error) {
+    console.error("Database Error: ", error);
+    throw new Error("Failed to change user's name");
+  }
+
+  revalidatePath("/dashboard/users");
+  revalidatePath(`/dashboard/users/${userId}`);
+}

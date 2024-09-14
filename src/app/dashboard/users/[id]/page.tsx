@@ -5,6 +5,7 @@ import LanguagesTable from "@/app/ui/singleUser/tables/LanguagesTable";
 import ProjectsTable from "@/app/ui/singleUser/tables/ProjectsTable";
 import SkillsTable from "@/app/ui/singleUser/tables/SkillsTable";
 import UserAvatar from "@/app/ui/singleUser/UserAvatar";
+import UserName from "@/app/ui/singleUser/UserName";
 import TableSkeleton from "@/app/ui/skeletons/TableSkeleton";
 import { Suspense } from "react";
 
@@ -18,10 +19,13 @@ export default async function SingleUserPage({
   return (
     <div>
       <div className="flex justify-around shadow-md rounded-lg p-5">
-        <UserAvatar avatar_url={user.avatar_url} userid={user.id} imageAlt={user.name}/>
+        <UserAvatar
+          avatar_url={user.avatar_url}
+          userid={user.id}
+          imageAlt={user.name}
+        />
         <div>
-          <h2 className="text-4xl">{user.name}</h2>
-          <span> id: {user.id} </span>
+          <UserName userId={user.id} username={user.name} />
         </div>
       </div>
       <section className="shadow-md rounded-lg p-5 mt-12">
