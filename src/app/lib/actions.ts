@@ -224,3 +224,14 @@ export async function changeUserName(userId: string, newUserName: string) {
   revalidatePath("/dashboard/users");
   revalidatePath(`/dashboard/users/${userId}`);
 }
+
+export async function changeUserAbout(userId: string, newAbout: string) {
+  try {
+    await sql`UPDATE users SET about = ${newAbout} WHERE id = ${userId}`;
+  } catch (error) {
+    console.error("Database Error: ", error);
+    throw new Error("Failed to change user's about");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}

@@ -4,6 +4,7 @@ import EducationTable from "@/app/ui/singleUser/tables/EducationTable";
 import LanguagesTable from "@/app/ui/singleUser/tables/LanguagesTable";
 import ProjectsTable from "@/app/ui/singleUser/tables/ProjectsTable";
 import SkillsTable from "@/app/ui/singleUser/tables/SkillsTable";
+import UserAbout from "@/app/ui/singleUser/UserAbout";
 import UserAvatar from "@/app/ui/singleUser/UserAvatar";
 import UserName from "@/app/ui/singleUser/UserName";
 import TableSkeleton from "@/app/ui/skeletons/TableSkeleton";
@@ -30,7 +31,7 @@ export default async function SingleUserPage({
       </div>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">About me</h3>
-        <p>{user.about}</p>
+        <UserAbout userid={user.id} userabout={user.about} />
       </section>
       <section className="shadow-md rounded-lg p-5 mt-12">
         <h3 className="text-center text-2xl">Education</h3>
