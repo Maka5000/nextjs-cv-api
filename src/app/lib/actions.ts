@@ -201,3 +201,14 @@ export async function deleteLanguage(userId: string, langId: string) {
   revalidatePath("/dashboard");
   revalidatePath(`/dashboard/users/${userId}`);
 }
+
+export async function changeUserAvatar(userId: string, avatar_url: string) {
+  try {
+    await sql`UPDATE users SET avatar_url = ${avatar_url} WHERE id = ${userId}`;
+  } catch (error) {
+    console.error("Database Error: ", error);
+    throw new Error("Failed to change user's avatar");
+  }
+
+  revalidatePath(`/dashboard/users/${userId}`);
+}
