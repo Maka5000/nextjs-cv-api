@@ -1,10 +1,16 @@
 import { deleteUser } from "@/app/lib/actions";
-import { fetchUsers } from "@/app/lib/data";
+import { fetchFilteredUsers } from "@/app/lib/data";
 import Link from "next/link";
 import DeleteBtn from "../DeleteButton";
 
-export default async function UsersTable() {
-  const users = await fetchUsers();
+export default async function UsersTable({
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+}) {
+  const users = await fetchFilteredUsers(query, currentPage)
 
   return (
     <div className="flex flex-col">

@@ -19,6 +19,25 @@ export async function fetchUsers() {
   }
 }
 
+const ITEMS_PER_PAGE = 6;
+export async function fetchFilteredUsers(query: string, currentPage: number) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  try {
+    const data = await sql<User>`
+      SELECT id, name 
+      FROM users 
+      WHERE 
+        name LIKE ${`%${query}%`}
+      ORDER BY id
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
+
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error: ", error);
+    throw new Error("Failed to fetch users");
+  }
+}
+
 export async function fetchUserByID(userid: string) {
   try {
     const data = await sql<User>`SELECT * FROM users WHERE id = ${userid}`;
