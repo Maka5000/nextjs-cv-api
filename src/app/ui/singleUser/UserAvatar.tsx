@@ -13,10 +13,10 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 const s3Client = new S3Client({
-  region: "eu-north-1",
+  region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION,
   credentials: fromCognitoIdentityPool({
-    clientConfig: { region: "eu-north-1" },
-    identityPoolId: "eu-north-1:d6ca6804-100a-4df1-a9a6-9bdd5e59d7e7",
+    clientConfig: { region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION },
+    identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_ID!,
   }),
 });
 
@@ -52,7 +52,7 @@ export default function UserAvatar({
   async function getListObjects() {
     try {
       const command = new ListObjectsCommand({
-        Bucket: "cv-api-bucket",
+        Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
       });
 
       const response = await s3Client.send(command);
@@ -82,7 +82,7 @@ export default function UserAvatar({
       }
 
       const command = new PutObjectCommand({
-        Bucket: "cv-api-bucket",
+        Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
         Key: `avatar/${userid}-${imageFile!.name}`,
         Body: imageFile,
         ContentType: imageFile!.type,
@@ -127,16 +127,16 @@ export default function UserAvatar({
     setIsAvatarLoading(true);
     try {
       const s3Client = new S3Client({
-        region: "eu-north-1",
+        region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION,
         credentials: fromCognitoIdentityPool({
-          clientConfig: { region: "eu-north-1" },
-          identityPoolId: "eu-north-1:d6ca6804-100a-4df1-a9a6-9bdd5e59d7e7",
+          clientConfig: { region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION },
+          identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_ID!,
         }),
       });
 
       const command = new DeleteObjectCommand({
         Key: avatarKey,
-        Bucket: "cv-api-bucket",
+        Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
       });
 
       await s3Client.send(command);

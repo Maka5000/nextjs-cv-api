@@ -32,15 +32,15 @@ export default function CreateButton({
     imageType: imageType
   ) {
     const s3Client = new S3Client({
-      region: "eu-north-1",
+      region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION,
       credentials: fromCognitoIdentityPool({
-        clientConfig: { region: "eu-north-1" },
-        identityPoolId: "eu-north-1:d6ca6804-100a-4df1-a9a6-9bdd5e59d7e7",
+        clientConfig: { region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION },
+        identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_ID!,
       }),
     });
 
     const command = new PutObjectCommand({
-      Bucket: "cv-api-bucket",
+      Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
       Key: `${imageType}/${userId}-${imageFile.name}`,
       Body: imageFile,
       ContentType: imageFile.type,
@@ -75,16 +75,16 @@ export default function CreateButton({
           }
         });
 
-
         if (inputValues.length === inputFields.length) {
-          
           let inputFiles;
           let inputFileName;
 
           if (imageType) {
             inputFiles = inputFields[2].files;
             if (inputFiles?.length) {
-              inputFileName = `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${inputFiles![0].name}`
+              inputFileName = `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${
+                inputFiles![0].name
+              }`;
               await S3UploadImage(userid, inputFiles[0], imageType);
             }
           }

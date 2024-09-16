@@ -2,7 +2,7 @@
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { DeleteFunction, imageType } from "../lib/definitions";
+import { DeleteFunction } from "../lib/definitions";
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 
@@ -23,16 +23,16 @@ export default function DeleteBtn({
 
   async function S3DeleteImage(imageKey: string) {
     const s3Client = new S3Client({
-      region: "eu-north-1",
+      region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION,
       credentials: fromCognitoIdentityPool({
-        clientConfig: { region: "eu-north-1" },
-        identityPoolId: "eu-north-1:d6ca6804-100a-4df1-a9a6-9bdd5e59d7e7",
+        clientConfig: { region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION },
+        identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_ID!,
       }),
     });
 
     const command = new DeleteObjectCommand({
       Key: imageKey,
-      Bucket: "cv-api-bucket",
+      Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
     });
 
     await s3Client.send(command);
