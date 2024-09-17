@@ -7,7 +7,9 @@ import SkillsTable from "@/app/ui/singleUser/tables/SkillsTable";
 import UserAbout from "@/app/ui/singleUser/UserAbout";
 import UserAvatar from "@/app/ui/singleUser/UserAvatar";
 import UserName from "@/app/ui/singleUser/UserName";
+import AvatarSkeleton from "@/app/ui/skeletons/AvatarSkeleton";
 import TableSkeleton from "@/app/ui/skeletons/TableSkeleton";
+import UserInfoSkeleton from "@/app/ui/skeletons/UserInfoSkeleton";
 import { Suspense } from "react";
 
 export default async function SingleUserPage({
@@ -20,13 +22,17 @@ export default async function SingleUserPage({
   return (
     <div>
       <div className="flex justify-around shadow-md rounded-lg p-5">
-        <UserAvatar
-          avatar_url={user.avatar_url}
-          userid={user.id}
-          imageAlt={user.name}
-        />
+        <Suspense fallback={<AvatarSkeleton />}>
+          <UserAvatar
+            avatar_url={user.avatar_url}
+            userid={user.id}
+            imageAlt={user.name}
+          />
+        </Suspense>
         <div>
-          <UserName userId={user.id} username={user.name} />
+          <Suspense fallback={<UserInfoSkeleton />}>
+            <UserName userId={user.id} username={user.name} />
+          </Suspense>
         </div>
       </div>
       <section className="shadow-md rounded-lg p-5 mt-12">
