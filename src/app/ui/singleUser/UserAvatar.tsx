@@ -83,14 +83,14 @@ export default function UserAvatar({
 
       const command = new PutObjectCommand({
         Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
-        Key: `avatar/${userid}-${imageFile!.name}`,
+        Key: `${userid}/avatar/${imageFile!.name}`,
         Body: imageFile,
         ContentType: imageFile!.type,
       });
 
       await s3Client.send(command);
 
-      const avatarURL = `d3l2iy99t9mkdn.cloudfront.net/avatar/${userid}-${
+      const avatarURL = `d3l2iy99t9mkdn.cloudfront.net/${userid}/avatar/${
         imageFile!.name
       }`;
 

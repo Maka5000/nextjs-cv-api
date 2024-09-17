@@ -41,7 +41,7 @@ export default function CreateButton({
 
     const command = new PutObjectCommand({
       Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
-      Key: `${imageType}/${userId}-${imageFile.name}`,
+      Key: `${userId}/${imageType}/${imageFile.name}`,
       Body: imageFile,
       ContentType: imageFile.type,
     });
@@ -82,7 +82,7 @@ export default function CreateButton({
           if (imageType) {
             inputFiles = inputFields[2].files;
             if (inputFiles?.length) {
-              inputFileName = `d3l2iy99t9mkdn.cloudfront.net/${imageType}/${userid}-${
+              inputFileName = `d3l2iy99t9mkdn.cloudfront.net/${userid}/${imageType}/${
                 inputFiles![0].name
               }`;
               await S3UploadImage(userid, inputFiles[0], imageType);
