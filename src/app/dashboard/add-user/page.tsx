@@ -7,7 +7,7 @@ export const metadata : Metadata = {
 
 export default function AddUser() {
   return (
-    <div>
+    <div className="pl-5 pr-5 pb-5">
       <h2 className="text-5xl text-center">Add User</h2>
       <div>
         <form action={createUser} className="flex flex-col" id="addUserForm">
