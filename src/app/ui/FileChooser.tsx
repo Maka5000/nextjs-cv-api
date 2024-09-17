@@ -25,7 +25,7 @@ export default function FileChooser() {
     <div>
       <label
         onClick={openInput}
-        className="bg-blue-500 rounded-lg px-3 text-white hover:cursor-pointer hover:bg-blue-300"
+        className="bg-blue-500 rounded-lg md:px-3 text-white hover:cursor-pointer hover:bg-blue-300"
       >
         Choose an image...
       </label>

@@ -21,7 +21,7 @@ export default async function SingleUserPage({
 
   return (
     <div>
-      <div className="flex justify-around shadow-md rounded-lg p-5">
+      <div className="flex justify-around shadow-md rounded-lg p-5 flex-col md:flex-row">
         <Suspense fallback={<AvatarSkeleton />}>
           <UserAvatar
             avatar_url={user.avatar_url}

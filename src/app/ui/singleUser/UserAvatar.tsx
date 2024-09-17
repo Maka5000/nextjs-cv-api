@@ -183,9 +183,9 @@ export default function UserAvatar({
   }
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="flex">
       <img
-        className="w-full max-w-44"
+        className="w-full max-w-44 mb-3 md:mb-0"
         src={
           imageUrl
             ? imageUrl

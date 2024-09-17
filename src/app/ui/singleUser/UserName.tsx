@@ -41,7 +41,7 @@ export default function UserName({
             type="text"
             defaultValue={username}
             onChange={(e) => setNewUserName(e.currentTarget.value)}
-            className="mr-3 px-3"
+            className="mr-3 px-3 border-2 rounded-lg"
           />
         ) : (
           <h2 className="text-4xl mr-3">{username}</h2>
