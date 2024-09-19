@@ -68,7 +68,7 @@ export default function CreateButton({
         inputFields.forEach((field) => {
           if (field.required && !field.value) {
             field.style.borderColor = "red";
-            MySwal.showValidationMessage("Please fill all fields!");
+            MySwal.showValidationMessage("Please fill in all the fields!");
           } else {
             field.style.borderColor = "";
             inputValues.push(field.value);
