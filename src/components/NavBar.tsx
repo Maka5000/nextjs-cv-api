@@ -2,19 +2,38 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function NavBar() {
   const pathname = usePathname();
 
   const [navHidden, setNavHidden] = useState<boolean>(true);
 
+  const navElement = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    function handler(event: MouseEvent) {
+      if (!navHidden && event.target !== navElement.current) {
+        setNavHidden(true);
+      }
+    }
+
+    if (!navHidden) {
+      document.querySelector("body")?.addEventListener("click", handler);
+    } else {
+      document.querySelector("body")?.removeEventListener("click", handler);
+    }
+
+    return () =>
+      document.querySelector("body")?.removeEventListener("click", handler);
+  }, [navHidden]);
+
   return (
     <>
       <div className="lg:hidden w-full bg-blue-500 flex align-middle items-center justify-around text-white relative">
         <h1 className="text-5xl font-bold">CV API</h1>
         <div
-          className="flex flex-col justify-between w-12 h-8 hover:opacity-65"
+          className="flex flex-col justify-between w-12 h-8 hover:opacity-65 cursor-pointer"
           onClick={() => setNavHidden(!navHidden)}
         >
           <span className="block bg-white w-full h-2 rounded-lg"></span>
@@ -27,6 +46,7 @@ export default function NavBar() {
               ? `hidden`
               : "block absolute w-full top-full left-0 bg-blue-500 text-center z-10"
           }
+          ref={navElement}
         >
           <ul className="flex flex-col gap-y-4 py-4">
             <li>
