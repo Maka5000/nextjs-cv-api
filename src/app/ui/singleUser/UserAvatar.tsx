@@ -183,7 +183,7 @@ export default function UserAvatar({
   }
 
   return (
-    <div className="flex">
+    <div className="flex flex-wrap">
       <img
         className="w-full max-w-44 mb-3 md:mb-0"
         src={
@@ -237,7 +237,7 @@ export default function UserAvatar({
         </button>
       </div>
       <div
-        className={`flex mt-5 gap-x-5 justify-center ${
+        className={`mt-3 gap-x-5 mb-5 w-full ${
           confirmSaveHidden ? "hidden" : "flex"
         }`}
       >
