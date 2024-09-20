@@ -1,6 +1,7 @@
 import { fetchUserByID } from "@/app/lib/data";
 import ContactsTable from "@/app/ui/singleUser/tables/ContactsTable";
 import EducationTable from "@/app/ui/singleUser/tables/EducationTable";
+import JobsTable from "@/app/ui/singleUser/tables/JobsTable";
 import LanguagesTable from "@/app/ui/singleUser/tables/LanguagesTable";
 import ProjectsTable from "@/app/ui/singleUser/tables/ProjectsTable";
 import SkillsTable from "@/app/ui/singleUser/tables/SkillsTable";
@@ -67,6 +68,12 @@ export default async function SingleUserPage({
         <h3 className="text-center text-2xl">Languages</h3>
         <Suspense fallback={<TableSkeleton />}>
           <LanguagesTable userid={params.id} />
+        </Suspense>
+      </section>
+      <section className="shadow-md rounded-lg p-5 mt-12">
+        <h3 className="text-center text-2xl">Jobs</h3>
+        <Suspense fallback={<TableSkeleton />}>
+          <JobsTable userid={params.id} />
         </Suspense>
       </section>
     </div>

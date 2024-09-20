@@ -2,6 +2,7 @@ import { sql } from "@vercel/postgres";
 import {
   Contact,
   Education,
+  Job,
   Language,
   Project,
   Skill,
@@ -100,6 +101,17 @@ export async function fetchLanguages(userid: string) {
   } catch (error) {
     console.error("Database Error: ", error);
     throw new Error("Failed to fetch contacts");
+  }
+}
+
+export async function fetchJobs(userid: string) {
+  try {
+    const data =
+      await sql<Job>`SELECT * FROM jobs WHERE user_id = ${userid}`;
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error: ", error);
+    throw new Error("Failed to fetch jobs");
   }
 }
 

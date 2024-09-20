@@ -202,6 +202,37 @@ export async function deleteLanguage(userId: string, langId: string) {
   revalidatePath(`/dashboard/users/${userId}`);
 }
 
+export async function createJob(userId: string, ...args: string[]) {
+  try {
+    await sql`
+    INSERT INTO jobs VALUES (
+      uuid_generate_v4(),
+      ${userId},
+      ${args[0]},
+      ${args[1]},
+      ${args[2]}
+    );`;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to create Job.");
+  }
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/dashboard/users/${userId}`);
+}
+
+export async function deleteJob(userId: string, jobId: string) {
+  try {
+    await sql`DELETE FROM jobs WHERE id = ${jobId} AND user_id = ${userId}`;
+  } catch (error) {
+    console.error("Database error: ", error);
+    throw new Error("Failed to delete Job.");
+  }
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/dashboard/users/${userId}`);
+}
+
 export async function changeUserAvatar(userId: string, avatar_url: string) {
   try {
     await sql`UPDATE users SET avatar_url = ${avatar_url} WHERE id = ${userId}`;
