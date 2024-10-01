@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -70,19 +71,29 @@ export default function NavBar() {
               </Link>
             </li>
           </ul>
+          <div className="text-end">
+            <button
+              type="button"
+              onClick={() => signOut()}
+              className="bg-red-500 rounded-lg px-3 hover:bg-red-900 transition-colors mb-5 mr-5"
+            >
+              log out
+            </button>
+          </div>
         </nav>
       </div>
       <div
         className={`
-    min-h-screen 
-    bg-blue-500 
-    w-full 
-    max-w-72 
-    text-center py-10
-    text-white
-    hidden
-    lg:block
-    `}
+          min-h-screen 
+          bg-blue-500 
+          w-full 
+          max-w-72 
+          text-center py-10
+          text-white
+          hidden
+          lg:flex
+          lg:flex-col
+          `}
       >
         <h1 className="text-5xl font-bold">CV API</h1>
         <nav className="mt-16">
@@ -109,6 +120,15 @@ export default function NavBar() {
             </li>
           </ul>
         </nav>
+        <div className="flex flex-grow items-end justify-center">
+          <button
+            type="button"
+            onClick={() => signOut()}
+            className="bg-red-500 rounded-lg px-3 hover:bg-red-900 transition-colors"
+          >
+            log out
+          </button>
+        </div>
       </div>
     </>
   );
