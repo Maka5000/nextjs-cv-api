@@ -242,6 +242,7 @@ export async function changeUserAvatar(userId: string, avatar_url: string) {
   }
 
   revalidatePath(`/dashboard/users/${userId}`);
+  revalidatePath("/api/users");
 }
 
 export async function changeUserName(userId: string, newUserName: string) {
@@ -254,6 +255,7 @@ export async function changeUserName(userId: string, newUserName: string) {
 
   revalidatePath("/dashboard/users");
   revalidatePath(`/dashboard/users/${userId}`);
+  revalidatePath("/api/users");
 }
 
 export async function changeUserAbout(userId: string, newAbout: string) {
@@ -265,4 +267,5 @@ export async function changeUserAbout(userId: string, newAbout: string) {
   }
 
   revalidatePath(`/dashboard/users/${userId}`);
+  revalidatePath("/api/users");
 }

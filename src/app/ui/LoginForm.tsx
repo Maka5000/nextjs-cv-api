@@ -19,8 +19,6 @@ export default function LoginForm() {
       email: userInfo.email,
       password: userInfo.password,
     });
-
-    console.log(res);
   };
 
   return (

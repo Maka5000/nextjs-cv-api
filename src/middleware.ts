@@ -9,14 +9,11 @@ export async function middleware(req: NextRequest) {
 
   if (isOnDashboard) {
     if (isAuthenticated) {
-      console.log("on dashboard");
       return NextResponse.next();
     }
 
-    console.log("on dashboard, not authed");
     return NextResponse.redirect(new URL("/", req.nextUrl));
   } else if (isAuthenticated) {
-    console.log("just authed");
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
   }
 }
