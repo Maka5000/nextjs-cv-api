@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import LoginForm from "./ui/LoginForm";
+import LoginFormSkeleton from "./ui/skeletons/LoginFormSkeleton";
 
 export default function LoginPage() {
   return (
@@ -14,8 +16,12 @@ export default function LoginPage() {
             p-3
             `}
       >
-        <h1 className="sm:text-3xl md:text-5xl font-bold mb-12">CV API Dashboard</h1>
-        <LoginForm />
+        <h1 className="sm:text-3xl md:text-5xl font-bold mb-12">
+          CV API Dashboard
+        </h1>
+        <Suspense fallback={<LoginFormSkeleton />}>
+          <LoginForm />
+        </Suspense>
       </div>
     </div>
   );
