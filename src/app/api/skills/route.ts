@@ -1,10 +1,10 @@
-import { sql } from "@vercel/postgres";
+import { fetchSkills } from "@/app/lib/data";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const skills = await sql`SELECT * from skills`;
-    return NextResponse.json({ skills: skills.rows }, { status: 200 });
+    const skills = await fetchSkills();
+    return NextResponse.json({ skills: skills }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
