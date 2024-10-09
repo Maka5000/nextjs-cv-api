@@ -63,7 +63,7 @@ export const fetchUserByID = unstable_cache(
 );
 
 export const fetchEducations = unstable_cache(
-  async (userid? : string) => {
+  async (userid?: string) => {
     try {
       if (!userid) {
         const data = await sql<Education>`SELECT * FROM educations`;
@@ -124,7 +124,7 @@ export const fetchProjects = unstable_cache(
 );
 
 export const fetchContacts = unstable_cache(
-  async (userid: string) => {
+  async (userid? : string) => {
     try {
       if (!userid) {
         const data = await sql<Contact>`SELECT * FROM contacts`;
@@ -144,7 +144,7 @@ export const fetchContacts = unstable_cache(
 );
 
 export const fetchLanguages = unstable_cache(
-  async (userid: string) => {
+  async (userid? : string) => {
     try {
       if (!userid) {
         const data = await sql<Language>`SELECT * FROM languages`;
@@ -163,7 +163,7 @@ export const fetchLanguages = unstable_cache(
 );
 
 export const fetchJobs = unstable_cache(
-  async (userid: string) => {
+  async (userid? : string) => {
     if (!userid) {
       const data = await sql<Job>`SELECT * FROM jobs`;
       return data.rows;
