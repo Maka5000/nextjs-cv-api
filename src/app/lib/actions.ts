@@ -1,7 +1,7 @@
 "use server";
 
 import { sql } from "@vercel/postgres";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createUser(formData: FormData) {
@@ -19,8 +19,7 @@ export async function createUser(formData: FormData) {
     console.log(error);
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/users");
+  revalidateTag("users");
   redirect("/dashboard/users");
 }
 
@@ -32,8 +31,7 @@ export async function deleteUser(userid: string) {
     throw new Error("Failed to delete user.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/users");
+  revalidateTag("users");
 }
 
 export async function createEducation(userId: string, ...args: string[]) {
@@ -51,8 +49,7 @@ export async function createEducation(userId: string, ...args: string[]) {
     console.log(error);
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("educations");
 }
 
 export async function deleteEducation(userId: string, educationId: string) {
@@ -63,8 +60,7 @@ export async function deleteEducation(userId: string, educationId: string) {
     throw new Error("Failed to delete Education.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("educations");
 }
 
 export async function createSkill(
@@ -86,8 +82,7 @@ export async function createSkill(
     throw new Error("Failed to create Skill.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("skills");
 }
 
 export async function deleteSkill(userId: string, skillId: string) {
@@ -98,8 +93,7 @@ export async function deleteSkill(userId: string, skillId: string) {
     throw new Error("Failed to delete Education.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("skills");
 }
 
 export async function createProject(
@@ -121,8 +115,7 @@ export async function createProject(
     throw new Error("Failed to create Project.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("projects");
 }
 
 export async function deleteProject(userId: string, projectId: string) {
@@ -133,8 +126,7 @@ export async function deleteProject(userId: string, projectId: string) {
     throw new Error("Failed to delete Project.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("projects");
 }
 
 export async function createContact(
@@ -156,8 +148,7 @@ export async function createContact(
     throw new Error("Failed to create Contact.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("contacts");
 }
 
 export async function deleteContact(userId: string, contactId: string) {
@@ -168,8 +159,7 @@ export async function deleteContact(userId: string, contactId: string) {
     throw new Error("Failed to delete Contact.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("contacts");
 }
 
 export async function createLanguage(userId: string, ...args: string[]) {
@@ -186,8 +176,7 @@ export async function createLanguage(userId: string, ...args: string[]) {
     throw new Error("Failed to create Language.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("languages");
 }
 
 export async function deleteLanguage(userId: string, langId: string) {
@@ -198,8 +187,7 @@ export async function deleteLanguage(userId: string, langId: string) {
     throw new Error("Failed to delete Language.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("languages");
 }
 
 export async function createJob(userId: string, ...args: string[]) {
@@ -217,8 +205,7 @@ export async function createJob(userId: string, ...args: string[]) {
     throw new Error("Failed to create Job.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("jobs");
 }
 
 export async function deleteJob(userId: string, jobId: string) {
@@ -229,8 +216,7 @@ export async function deleteJob(userId: string, jobId: string) {
     throw new Error("Failed to delete Job.");
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/users/${userId}`);
+  revalidateTag("jobs");
 }
 
 export async function changeUserAvatar(userId: string, avatar_url: string) {
@@ -241,8 +227,7 @@ export async function changeUserAvatar(userId: string, avatar_url: string) {
     throw new Error("Failed to change user's avatar");
   }
 
-  revalidatePath(`/dashboard/users/${userId}`);
-  revalidatePath("/api/users");
+  revalidateTag("users");
 }
 
 export async function changeUserName(userId: string, newUserName: string) {
@@ -253,9 +238,7 @@ export async function changeUserName(userId: string, newUserName: string) {
     throw new Error("Failed to change user's name");
   }
 
-  revalidatePath("/dashboard/users");
-  revalidatePath(`/dashboard/users/${userId}`);
-  revalidatePath("/api/users");
+  revalidateTag("users");
 }
 
 export async function changeUserAbout(userId: string, newAbout: string) {
@@ -266,6 +249,5 @@ export async function changeUserAbout(userId: string, newAbout: string) {
     throw new Error("Failed to change user's about");
   }
 
-  revalidatePath(`/dashboard/users/${userId}`);
-  revalidatePath("/api/users");
+  revalidateTag("users");
 }

@@ -1,11 +1,10 @@
-import { fetchApiUsers } from "@/app/lib/data";
+import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const users = await fetchApiUsers();
-
-    return NextResponse.json({ users: users }, { status: 200 });
+    const projects = await sql`SELECT * from projects`;
+    return NextResponse.json({ projects: projects.rows }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
