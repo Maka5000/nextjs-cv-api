@@ -242,12 +242,12 @@ export const fetchApiUsers = unstable_cache(
   async () => {
     const users = await sql`
       SELECT u.*, 
-        COALESCE(json_agg(e.*) FILTER(WHERE e.user_id IS NOT NULL), '[]') as educations,
-        COALESCE(json_agg(s.*) FILTER(WHERE s.user_id IS NOT NULL), '[]') as skills,
-        COALESCE(json_agg(p.*) FILTER(WHERE p.user_id IS NOT NULL), '[]') as projects,
-        COALESCE(json_agg(c.*) FILTER(WHERE c.user_id IS NOT NULL), '[]') as contacts,
-        COALESCE(json_agg(l.*) FILTER(WHERE l.user_id IS NOT NULL), '[]') as languages,
-        COALESCE(json_agg(j.*) FILTER(WHERE j.user_id IS NOT NULL), '[]') as jobs
+        COALESCE(json_agg(DISTINCT e.*) FILTER(WHERE e.user_id IS NOT NULL), '[]') as educations,
+        COALESCE(json_agg(DISTINCT s.*) FILTER(WHERE s.user_id IS NOT NULL), '[]') as skills,
+        COALESCE(json_agg(DISTINCT p.*) FILTER(WHERE p.user_id IS NOT NULL), '[]') as projects,
+        COALESCE(json_agg(DISTINCT c.*) FILTER(WHERE c.user_id IS NOT NULL), '[]') as contacts,
+        COALESCE(json_agg(DISTINCT l.*) FILTER(WHERE l.user_id IS NOT NULL), '[]') as languages,
+        COALESCE(json_agg(DISTINCT j.*) FILTER(WHERE j.user_id IS NOT NULL), '[]') as jobs
       FROM users AS u
         FULL JOIN educations AS e ON u.id=e.user_id
         FULL JOIN skills AS s ON u.id=s.user_id
