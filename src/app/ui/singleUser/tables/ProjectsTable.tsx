@@ -7,7 +7,7 @@ import ProjectsForm from "../modals/forms/ProjectsForm";
 export default async function ProjectsTable({
   userid,
 }: Readonly<{ userid: string }>) {
-  const projects = await fetchProjects(userid);
+  const projects = await fetchProjects({userid : userid});
 
   return (
     <div className="flex flex-col">

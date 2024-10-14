@@ -1,9 +1,15 @@
 import { fetchApiUsers } from "@/app/lib/data";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const users = await fetchApiUsers();
+    const usernameQuery = req.nextUrl.searchParams.get("name");
+    const useridQuery = req.nextUrl.searchParams.get("userid");
+
+    const users = await fetchApiUsers({
+      userid: useridQuery!,
+      username: usernameQuery!,
+    });
 
     return NextResponse.json({ users: users }, { status: 200 });
   } catch (error) {

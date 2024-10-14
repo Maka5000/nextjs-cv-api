@@ -7,7 +7,7 @@ import LanguagesForm from "../modals/forms/LanguagesForm";
 export default async function LanguagesTable({
   userid,
 }: Readonly<{ userid: string }>) {
-  const languages = await fetchLanguages(userid);
+  const languages = await fetchLanguages({ userid: userid });
 
   return (
     <div className="flex flex-col">
@@ -37,7 +37,7 @@ export default async function LanguagesTable({
                       btnTitle="Add Language"
                       modalTitle="Add Language"
                       userid={userid}
-                      createHandler={{item : createLanguage}}
+                      createHandler={{ item: createLanguage }}
                     >
                       <LanguagesForm />
                     </CreateButton>

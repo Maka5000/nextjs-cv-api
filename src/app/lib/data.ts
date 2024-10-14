@@ -63,16 +63,44 @@ export const fetchUserByID = unstable_cache(
 );
 
 export const fetchEducations = unstable_cache(
-  async (userid?: string) => {
+  async ({
+    userid,
+    establishment,
+    program,
+    degree,
+  }: {
+    userid?: string;
+    establishment?: string;
+    program?: string;
+    degree?: string;
+  } = {}) => {
     try {
-      if (!userid) {
-        const data = await sql<Education>`SELECT * FROM educations`;
-
+      if (userid) {
+        const data =
+          await sql<Education>`SELECT * FROM educations WHERE user_id = ${userid}`;
         return data.rows;
       }
 
-      const data =
-        await sql<Education>`SELECT * FROM educations WHERE user_id = ${userid}`;
+      if (establishment) {
+        const data =
+          await sql<Education>`SELECT * FROM educations WHERE establishment = ${establishment}`;
+        return data.rows;
+      }
+
+      if (program) {
+        const data =
+          await sql<Education>`SELECT * FROM educations WHERE program = ${program}`;
+        return data.rows;
+      }
+
+      if (degree) {
+        const data =
+          await sql<Education>`SELECT * FROM educations WHERE degree = ${degree}`;
+        return data.rows;
+      }
+
+      const data = await sql<Education>`SELECT * FROM educations`;
+
       return data.rows;
     } catch (error) {
       console.error("Database Error: ", error);
@@ -84,15 +112,37 @@ export const fetchEducations = unstable_cache(
 );
 
 export const fetchSkills = unstable_cache(
-  async (userid?: string) => {
-    if (!userid) {
-      const data = await sql<Skill>`SELECT * FROM skills`;
-      return data.rows;
-    }
-
+  async ({
+    userid,
+    skillname,
+    skillLevel,
+  }: {
+    userid?: string;
+    skillname?: string;
+    skillLevel?: string;
+  } = {}) => {
     try {
-      const data =
-        await sql<Skill>`SELECT * FROM skills WHERE user_id = ${userid}`;
+      if (skillname) {
+        const data =
+          await sql<Skill>`SELECT * FROM skills WHERE name=${skillname}`;
+
+        return data.rows;
+      }
+
+      if (skillLevel) {
+        const data =
+          await sql<Skill>`SELECT * FROM skills WHERE level=${skillLevel}`;
+
+        return data.rows;
+      }
+
+      if (userid) {
+        const data =
+          await sql<Skill>`SELECT * FROM skills WHERE user_id = ${userid}`;
+        return data.rows;
+      }
+
+      const data = await sql<Skill>`SELECT * FROM skills`;
       return data.rows;
     } catch (error) {
       console.error("Database Error: ", error);
@@ -104,15 +154,25 @@ export const fetchSkills = unstable_cache(
 );
 
 export const fetchProjects = unstable_cache(
-  async (userid?: string) => {
-    if (!userid) {
-      const data = await sql<Project>`SELECT * FROM projects`;
-      return data.rows;
-    }
-
+  async ({
+    userid,
+    projectname,
+  }: { userid?: string; projectname?: string } = {}) => {
     try {
-      const data =
-        await sql<Project>`SELECT * FROM projects WHERE user_id = ${userid}`;
+      if (userid) {
+        const data =
+          await sql<Project>`SELECT * FROM projects WHERE user_id = ${userid}`;
+        return data.rows;
+      }
+
+      if (projectname) {
+        const data =
+          await sql<Project>`SELECT * FROM projects WHERE name=${projectname}`;
+
+        return data.rows;
+      }
+
+      const data = await sql<Project>`SELECT * FROM projects`;
       return data.rows;
     } catch (error) {
       console.error("Database Error: ", error);
@@ -124,7 +184,7 @@ export const fetchProjects = unstable_cache(
 );
 
 export const fetchContacts = unstable_cache(
-  async (userid? : string) => {
+  async (userid?: string) => {
     try {
       if (!userid) {
         const data = await sql<Contact>`SELECT * FROM contacts`;
@@ -144,14 +204,35 @@ export const fetchContacts = unstable_cache(
 );
 
 export const fetchLanguages = unstable_cache(
-  async (userid? : string) => {
+  async ({
+    userid,
+    language,
+    level,
+  }: {
+    userid?: string;
+    language?: string;
+    level?: string;
+  } = {}) => {
     try {
-      if (!userid) {
-        const data = await sql<Language>`SELECT * FROM languages`;
+      if (userid) {
+        const data =
+          await sql<Language>`SELECT * FROM languages WHERE user_id = ${userid}`;
         return data.rows;
       }
-      const data =
-        await sql<Language>`SELECT * FROM languages WHERE user_id = ${userid}`;
+
+      if (language) {
+        const data =
+          await sql<Language>`SELECT * FROM languages WHERE language=${language}`;
+        return data.rows;
+      }
+
+      if (level) {
+        const data =
+          await sql<Language>`SELECT * FROM languages WHERE level=${level}`;
+        return data.rows;
+      }
+
+      const data = await sql<Language>`SELECT * FROM languages`;
       return data.rows;
     } catch (error) {
       console.error("Database Error: ", error);
@@ -163,14 +244,43 @@ export const fetchLanguages = unstable_cache(
 );
 
 export const fetchJobs = unstable_cache(
-  async (userid? : string) => {
-    if (!userid) {
-      const data = await sql<Job>`SELECT * FROM jobs`;
-      return data.rows;
-    }
-
+  async ({
+    userid,
+    company,
+    position,
+    experience,
+  }: {
+    userid?: string;
+    company?: string;
+    position?: string;
+    experience?: string;
+  } = {}) => {
     try {
-      const data = await sql<Job>`SELECT * FROM jobs WHERE user_id = ${userid}`;
+      if (userid) {
+        const data =
+          await sql<Job>`SELECT * FROM jobs WHERE user_id = ${userid}`;
+        return data.rows;
+      }
+
+      if (company) {
+        const data =
+          await sql<Job>`SELECT * FROM jobs WHERE company=${company}`;
+        return data.rows;
+      }
+
+      if (position) {
+        const data =
+          await sql<Job>`SELECT * FROM jobs WHERE position=${position}`;
+        return data.rows;
+      }
+
+      if (experience) {
+        const data =
+          await sql<Job>`SELECT * FROM jobs WHERE experience=${experience}`;
+        return data.rows;
+      }
+
+      const data = await sql<Job>`SELECT * FROM jobs`;
       return data.rows;
     } catch (error) {
       console.error("Database Error: ", error);
@@ -239,7 +349,51 @@ export const fetchCardData = unstable_cache(
 );
 
 export const fetchApiUsers = unstable_cache(
-  async () => {
+  async ({ username, userid }: { username?: string; userid?: string } = {}) => {
+    if (userid) {
+      const users = await sql`
+        SELECT u.*, 
+          COALESCE(json_agg(DISTINCT e.*) FILTER(WHERE e.user_id IS NOT NULL), '[]') as educations,
+          COALESCE(json_agg(DISTINCT s.*) FILTER(WHERE s.user_id IS NOT NULL), '[]') as skills,
+          COALESCE(json_agg(DISTINCT p.*) FILTER(WHERE p.user_id IS NOT NULL), '[]') as projects,
+          COALESCE(json_agg(DISTINCT c.*) FILTER(WHERE c.user_id IS NOT NULL), '[]') as contacts,
+          COALESCE(json_agg(DISTINCT l.*) FILTER(WHERE l.user_id IS NOT NULL), '[]') as languages,
+          COALESCE(json_agg(DISTINCT j.*) FILTER(WHERE j.user_id IS NOT NULL), '[]') as jobs
+        FROM users AS u
+          FULL JOIN educations AS e ON u.id=e.user_id
+          FULL JOIN skills AS s ON u.id=s.user_id
+          FULL JOIN projects AS p ON u.id=p.user_id
+          FULL JOIN contacts AS c ON u.id=c.user_id
+          FULL JOIN languages AS l ON u.id=l.user_id
+          FULL JOIN jobs AS j ON u.id=j.user_id
+        WHERE u.id=${userid}
+        GROUP BY u.id`;
+
+      return users.rows;
+    }
+
+    if (username) {
+      const users = await sql`
+        SELECT u.*, 
+          COALESCE(json_agg(DISTINCT e.*) FILTER(WHERE e.user_id IS NOT NULL), '[]') as educations,
+          COALESCE(json_agg(DISTINCT s.*) FILTER(WHERE s.user_id IS NOT NULL), '[]') as skills,
+          COALESCE(json_agg(DISTINCT p.*) FILTER(WHERE p.user_id IS NOT NULL), '[]') as projects,
+          COALESCE(json_agg(DISTINCT c.*) FILTER(WHERE c.user_id IS NOT NULL), '[]') as contacts,
+          COALESCE(json_agg(DISTINCT l.*) FILTER(WHERE l.user_id IS NOT NULL), '[]') as languages,
+          COALESCE(json_agg(DISTINCT j.*) FILTER(WHERE j.user_id IS NOT NULL), '[]') as jobs
+        FROM users AS u
+          FULL JOIN educations AS e ON u.id=e.user_id
+          FULL JOIN skills AS s ON u.id=s.user_id
+          FULL JOIN projects AS p ON u.id=p.user_id
+          FULL JOIN contacts AS c ON u.id=c.user_id
+          FULL JOIN languages AS l ON u.id=l.user_id
+          FULL JOIN jobs AS j ON u.id=j.user_id
+        WHERE u.name=${username}
+        GROUP BY u.id`;
+
+      return users.rows;
+    }
+
     const users = await sql`
       SELECT u.*, 
         COALESCE(json_agg(DISTINCT e.*) FILTER(WHERE e.user_id IS NOT NULL), '[]') as educations,

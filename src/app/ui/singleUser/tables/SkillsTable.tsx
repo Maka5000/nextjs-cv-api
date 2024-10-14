@@ -7,7 +7,7 @@ import { createSkill, deleteSkill } from "@/app/lib/actions";
 export default async function SkillsTable({
   userid,
 }: Readonly<{ userid: string }>) {
-  const skills = await fetchSkills(userid);
+  const skills = await fetchSkills({userid : userid});
 
   return (
     <div className="flex flex-col">

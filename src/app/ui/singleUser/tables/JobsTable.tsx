@@ -7,7 +7,7 @@ import JobsForm from "../modals/forms/JobsForm";
 export default async function JobsTable({
   userid,
 }: Readonly<{ userid: string }>) {
-  const jobs = await fetchJobs(userid);
+  const jobs = await fetchJobs({ userid: userid });
 
   return (
     <div className="flex flex-col">

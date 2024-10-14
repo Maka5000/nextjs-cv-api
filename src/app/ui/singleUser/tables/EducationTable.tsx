@@ -7,7 +7,7 @@ import DeleteBtn from "../../DeleteButton";
 export default async function EducationTable({
   userid,
 }: Readonly<{ userid: string }>) {
-  const educations = await fetchEducations(userid);
+  const educations = await fetchEducations({ userid: userid });
 
   return (
     <div className="flex flex-col">
@@ -43,7 +43,7 @@ export default async function EducationTable({
                       modalTitle="Add Education"
                       btnTitle="Add Education"
                       userid={userid}
-                      createHandler={{item : createEducation}}
+                      createHandler={{ item: createEducation }}
                     >
                       <EducationForm />
                     </CreateButton>
