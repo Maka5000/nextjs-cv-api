@@ -7,7 +7,7 @@ import ContactsForm from "../modals/forms/ContactsForm";
 export default async function ContactsTable({
   userid,
 }: Readonly<{ userid: string }>) {
-  const contacts = await fetchContacts(userid);
+  const contacts = await fetchContacts({userid : userid});
 
   return (
     <div className="flex flex-col">
