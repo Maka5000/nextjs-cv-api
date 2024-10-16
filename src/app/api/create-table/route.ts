@@ -77,20 +77,21 @@
 //     )`;
 // }
 
-// export async function GET() {
-//   try {
-//     await createProfilesTable();
-//     await createEducationsTable();
-//     await createSkillsTable();
-//     await createProjectsTable();
-//     await createContactsTable();
-//     await createLanguagesTable();
-//     await createJobsTable();
-//     await createAuthUsersTable();
+export async function GET() {
+  try {
+    // await createProfilesTable();
+    // await createEducationsTable();
+    // await createSkillsTable();
+    // await createProjectsTable();
+    // await createContactsTable();
+    // await createLanguagesTable();
+    // await createJobsTable();
+    // await createAuthUsersTable();
 
-//     return Response.json({ message: "Database tables created" });
-//   } catch (error) {
-//     await sql`ROLLBACK`;
-//     return Response.json({ error }, { status: 500 });
-//   }
-// }
+    // return Response.json({ message: "Database tables created" });
+    return Response.json({ message: null });
+  } catch (error) {
+    // await sql`ROLLBACK`;
+    return Response.json({ error }, { status: 500 });
+  }
+}
