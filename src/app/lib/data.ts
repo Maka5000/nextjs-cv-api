@@ -184,15 +184,35 @@ export const fetchProjects = unstable_cache(
 );
 
 export const fetchContacts = unstable_cache(
-  async (userid?: string) => {
+  async ({
+    userid,
+    contactType,
+    contact,
+  }: {
+    userid?: string;
+    contactType?: string;
+    contact?: string;
+  } = {}) => {
     try {
-      if (!userid) {
-        const data = await sql<Contact>`SELECT * FROM contacts`;
+      if (userid) {
+        const data =
+          await sql<Contact>`SELECT * FROM contacts WHERE user_id = ${userid}`;
         return data.rows;
       }
 
-      const data =
-        await sql<Contact>`SELECT * FROM contacts WHERE user_id = ${userid}`;
+      if (contactType) {
+        const data =
+          await sql<Contact>`SELECT * FROM contacts WHERE type = ${contactType}`;
+        return data.rows;
+      }
+
+      if (contact) {
+        const data =
+          await sql<Contact>`SELECT * FROM contacts WHERE contact = ${contact}`;
+        return data.rows;
+      }
+
+      const data = await sql<Contact>`SELECT * FROM contacts`;
       return data.rows;
     } catch (error) {
       console.error("Database Error: ", error);
@@ -236,7 +256,7 @@ export const fetchLanguages = unstable_cache(
       return data.rows;
     } catch (error) {
       console.error("Database Error: ", error);
-      throw new Error("Failed to fetch contacts");
+      throw new Error("Failed to fetch languages");
     }
   },
   [],

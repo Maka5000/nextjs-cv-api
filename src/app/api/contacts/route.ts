@@ -1,9 +1,17 @@
 import { fetchContacts } from "@/app/lib/data";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const contacts = await fetchContacts();
+    const useridQuery = req.nextUrl.searchParams.get("userid");
+    const typeQuery = req.nextUrl.searchParams.get("type");
+    const contactQuery = req.nextUrl.searchParams.get("contact");
+
+    const contacts = await fetchContacts({
+      userid: useridQuery!,
+      contactType: typeQuery!,
+      contact: contactQuery!,
+    });
 
     return NextResponse.json({ contacts: contacts }, { status: 200 });
   } catch (error) {
