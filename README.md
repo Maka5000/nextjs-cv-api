@@ -30,7 +30,6 @@ https://nextjs-cv-api.vercel.app
 
 ### Contacts:
 - `/api/contacts`- to get all contacts with all info
-
     - `?userid`- query to get contacts by user's id
     - `?type`- query to get contacts by specified type
     - `?contact`- query to get contacts by specified contact
