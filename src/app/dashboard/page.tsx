@@ -31,7 +31,7 @@ export default async function Dashboard() {
       </section>
       <section className="mt-10 text-left">
         <div className="text-center">
-          This page was created to make creation of my cv websites easier.
+          This project was created to make creation of my cv websites easier.
         </div>
         <div>
           <h2 className="font-bold text-center text-3xl pt-10">Usage</h2>
