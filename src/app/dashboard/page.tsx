@@ -23,7 +23,7 @@ export default async function Dashboard() {
         {cardData.map((data, index) => (
           <InfoChip
             key={index}
-            imageURL={`/images/dashboard/${data.name}.svg`}
+            imageURL={`/images/dashboard/${data.name.toLowerCase()}.svg`}
             count={data.count}
             chipTitle={data.name}
           />
