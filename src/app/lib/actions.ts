@@ -26,12 +26,24 @@ export async function createUser(formData: FormData) {
 export async function deleteUser(userid: string) {
   try {
     await sql`DELETE FROM users WHERE id = ${userid}`;
+    await sql`DELETE FROM educations WHERE user_id = ${userid}`;
+    await sql`DELETE FROM skills WHERE user_id = ${userid}`;
+    await sql`DELETE FROM projects WHERE user_id = ${userid}`;
+    await sql`DELETE FROM contacts WHERE user_id = ${userid}`;
+    await sql`DELETE FROM jobs WHERE user_id = ${userid}`;
+    await sql`DELETE FROM languages WHERE user_id = ${userid}`;
   } catch (error) {
     console.error("Database error: ", error);
     throw new Error("Failed to delete user.");
   }
 
   revalidateTag("users");
+  revalidateTag("educations");
+  revalidateTag("skills");
+  revalidateTag("projects");
+  revalidateTag("contacts");
+  revalidateTag("jobs");
+  revalidateTag("languages");
 }
 
 export async function createEducation(userId: string, ...args: string[]) {
