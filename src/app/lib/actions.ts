@@ -1,5 +1,7 @@
 "use server";
 
+import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 import { sql } from "@vercel/postgres";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
@@ -25,6 +27,14 @@ export async function createUser(formData: FormData) {
 
 export async function deleteUser(userid: string) {
   try {
+    const AvatarKey =
+      await sql`SELECT avatar_url FROM users WHERE id = ${userid} AND avatar_url != '/images/user/defaultavatar.jpg'`;
+
+    if (AvatarKey.rows[0]) {
+      await deleteAvatar(AvatarKey.rows[0].avatar_url);
+      console.log("avatar deleted")
+    }
+
     await sql`DELETE FROM users WHERE id = ${userid}`;
     await sql`DELETE FROM educations WHERE user_id = ${userid}`;
     await sql`DELETE FROM skills WHERE user_id = ${userid}`;
@@ -262,4 +272,32 @@ export async function changeUserAbout(userId: string, newAbout: string) {
   }
 
   revalidateTag("users");
+}
+
+async function deleteAvatar(avatar_url: string) {
+  let splittedAvatarUrl = avatar_url.split("/");
+
+  splittedAvatarUrl?.shift();
+
+  const avatarKey = splittedAvatarUrl!.join("/");
+
+  try {
+    const s3Client = new S3Client({
+      region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION,
+      credentials: fromCognitoIdentityPool({
+        clientConfig: { region: process.env.NEXT_PUBLIC_AWS_IDENTITY_REGION },
+        identityPoolId: process.env.NEXT_PUBLIC_AWS_IDENTITY_ID!,
+      }),
+    });
+
+    const command = new DeleteObjectCommand({
+      Key: avatarKey,
+      Bucket: process.env.NEXT_PUBLIC_BUCKET_NAME,
+    });
+
+    await s3Client.send(command);
+  } catch (error) {
+    console.error("Avatar Error: ", error);
+    throw new Error("Something went wrong! Coudn't delete avatar");
+  }
 }

@@ -163,7 +163,6 @@ export default function UserAvatar({
       confirmButtonText: "Delete",
       showLoaderOnConfirm: true,
       preConfirm: async () => {
-        deleteAvatar();
         try {
           await deleteAvatar();
         } catch (error) {
