@@ -1,48 +1,44 @@
-This project was created to make creation of my cv websites easier.
+# 🧾 nextjs-cv-api
 
-https://nextjs-cv-api.vercel.app
+A responsive CV editor built with **Next.js (App Router)**, **TypeScript**, and **Tailwind CSS**.  
+This project allows updating CV content dynamically through an editable form and API routes.
 
-# Usage
+## Project's URL
 
-### Users:
-- `/api/users`- to get all user profiles with all info
-    - `?userid`- *query to get user profile by user's id*
-    - `?name`- *query to get user profile by user's name*
+https://nextjs-cv-api.vercel.app/
 
+## 🚀 Features
 
-### Educations:
-- `/api/educations`- to get all educations with all info
-    - `?userid`- *query to get educations by user's id*
-    - `?establishment` - *query to get educations by specified estanlishment*
-    - `?program` -*query to get educations by specified program*
-    - `?degree` - *query to get educations by specified degree*
+- 🌐 Server-side rendered with App Router (Next.js 13+)
+- 📑 Editable CV form with real-time updates
+- 🔧 API routes to fetch and update data
+- 🎨 Tailwind CSS for rapid styling and layout
+- 🗂️ Clean folder structure and component-based architecture
 
-### Skills:
-- `/api/skills`- to get all skills with all info
-    - `?userid`- query to get skills by user's id
-    - `?name`- query to get skills by specified name
-    - `?level`- query to get skills by specified level
+## 📸 Screenshots
 
-### Projects:
-- `/api/projects`- to get all projects with all info
-    - `?userid`- query to get projects by user's id
-    - `?name`- query to get projects by specified name
+### Main CV Page  
+![Home view](./public/screenshots/home-view.jpeg)
 
-### Contacts:
-- `/api/contacts`- to get all contacts with all info
-    - `?userid`- query to get contacts by user's id
-    - `?type`- query to get contacts by specified type
-    - `?contact`- query to get contacts by specified contact
+### Users Page
+![Users page](https://github.com/Maka5000/nextjs-cv-api/issues/7#issue-3203411201)
+Adding new user
 
-### Languages:
-- `/api/languages`- to get all languages with all info
-    - `?userid`- query to get languages by user's id
-    - `?language`- query to get languages by specified language
-    - `?level`- query to get lanugages by specified level
+### Profile view
+![Profile view](./public/screenshots/user-profile-view.jpeg)
 
-### Jobs:
-- `/api/jobs`- to get all jobs with all info
-    - `?userid`- query to get jobs by user's id
-    - `?company`- query to get jobs by specified company
-    - `?position`- query to get jobs by specified position
-    - `?experience`- query to get jobs by specified experience
+## 🛠 Tech Stack
+
+- Next.js 13+ (App Router)
+- TypeScript
+- Tailwind CSS
+- React Hooks & Forms
+- Postgress
+
+## 📂 Getting Started
+
+```bash
+git clone https://github.com/Maka5000/nextjs-cv-api
+cd nextjs-cv-api
+npm install
+npm run dev
