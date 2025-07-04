@@ -21,7 +21,7 @@ https://nextjs-cv-api.vercel.app/
 ![Home view](./public/screenshots/home-view.jpeg)
 
 ### Users Page
-![Users page](https://github.com/Maka5000/nextjs-cv-api/issues/7#issue-3203411201)
+![Users page](https://private-user-images.githubusercontent.com/43217938/462608727-003dc1a1-1b0e-4ae6-8960-ab4be416095c.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTE2NTQzNzcsIm5iZiI6MTc1MTY1NDA3NywicGF0aCI6Ii80MzIxNzkzOC80NjI2MDg3MjctMDAzZGMxYTEtMWIwZS00YWU2LTg5NjAtYWI0YmU0MTYwOTVjLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MDQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzA0VDE4MzQzN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTlkMmU2NTExODU5ZTBkZTlmMDdjMDhmYmIwZjAyYWVkOThhZjU3MzZkOGZmZmM3NDA5NzcwZDE4YzdlMGYyZTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.NY6jSeTyb-a7kzwoMdZZ1y21RTZXc7OPThsNPd6UL60)
 Adding new user
 
 ### Profile view
