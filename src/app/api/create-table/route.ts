@@ -1,4 +1,4 @@
-// import { sql } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 
 // async function createProfilesTable() {
 //   await sql`CREATE TABLE IF NOT EXISTS profiles (
@@ -77,6 +77,15 @@
 //     )`;
 // }
 
+// async function createApiKeysTable() {
+//   await sql`CREATE TABLE IF NOT EXISTS apikeys (
+//         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+//         user_id UUID NOT NULL,
+//         user_email TEXT NOT NULL UNIQUE,
+//         api_key_hash VARCHAR(255) NOT NULL
+//     )`;
+// }
+
 export async function GET() {
   try {
     // await createProfilesTable();
@@ -87,6 +96,8 @@ export async function GET() {
     // await createLanguagesTable();
     // await createJobsTable();
     // await createAuthUsersTable();
+
+    // await createApiKeysTable().then(res => console.log(res));
 
     // return Response.json({ message: "Database tables created" });
     return Response.json({ message: null });

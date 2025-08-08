@@ -1,7 +1,8 @@
+import { withApiKeyCheck } from "@/app/lib/withApiKeyCheck";
 import { fetchSkills } from "@/app/lib/data";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+async function handler(req: NextRequest) {
   try {
     const useridQuery = req.nextUrl.searchParams.get("userid");
     const nameQuery = req.nextUrl.searchParams.get("name");
@@ -18,3 +19,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+export const GET = withApiKeyCheck(handler);

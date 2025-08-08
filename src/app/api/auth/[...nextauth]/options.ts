@@ -50,5 +50,26 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        console.log('jwtCallback: ', {token, user});
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id;
+      }
+
+      return session;
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET,
 };
