@@ -5,6 +5,8 @@ import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 import { sql } from "@vercel/postgres";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 export async function createUser(formData: FormData) {
   const userName = formData.get("username");
@@ -32,7 +34,7 @@ export async function deleteUser(userid: string) {
 
     if (AvatarKey.rows[0]) {
       await deleteAvatar(AvatarKey.rows[0].avatar_url);
-      console.log("avatar deleted")
+      console.log("avatar deleted");
     }
 
     await sql`DELETE FROM users WHERE id = ${userid}`;
@@ -239,6 +241,57 @@ export async function deleteJob(userId: string, jobId: string) {
   }
 
   revalidateTag("jobs");
+}
+
+export async function generateApiKey() {
+  const key = crypto.randomBytes(32).toString("hex");
+
+  return key;
+}
+
+export async function hashKey(key: string) {
+  const saltRounds = 10;
+  return bcrypt.hash(key, saltRounds);
+}
+
+export async function createApiKey(
+  userId: string,
+  userEmail: string,
+  apiKeyHash: string
+) {
+  try {
+    await sql`
+    INSERT INTO apikeys VALUES (
+      uuid_generate_v4(),
+      ${userId},
+      ${userEmail},
+      ${apiKeyHash}
+    );`;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to create api key.");
+  }
+
+  revalidateTag("apikey");
+}
+
+export async function changeApiKey(userId: string, new_api_key_hash: string) {
+  try {
+    await sql`UPDATE apikeys SET api_key_hash = ${new_api_key_hash} WHERE user_id = ${userId}`;
+  } catch (error) {
+    console.error("Database error: ", error);
+    throw new Error("Failed to change api key");
+  }
+}
+
+export async function compareApiKey(api_key : string, api_key_hash : string) {
+  try {
+    const isValid = bcrypt.compare(api_key, api_key_hash);
+    return isValid
+  } catch (error) {
+    console.error("Compare error: ", error);
+    throw new Error("Failed to compare api keys");
+  }
 }
 
 export async function changeUserAvatar(userId: string, avatar_url: string) {

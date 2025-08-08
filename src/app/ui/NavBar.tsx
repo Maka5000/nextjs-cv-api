@@ -70,6 +70,16 @@ export default function NavBar() {
                 Users
               </Link>
             </li>
+            <li>
+              <Link
+                href={"/dashboard/apikey"}
+                className={`link ${
+                  pathname === "/dashboard/apikey" ? "active" : ""
+                } text-3xl block w-full transition-colors hover:bg-blue-700 hover:text-white`}
+              >
+                Api key
+              </Link>
+            </li>
           </ul>
           <div className="text-end">
             <button
@@ -116,6 +126,16 @@ export default function NavBar() {
                 } text-3xl block w-full transition-colors hover:bg-white hover:text-black`}
               >
                 Users
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={"/dashboard/apikey"}
+                className={`link ${
+                  pathname === "/dashboard/apikey" ? "active" : ""
+                } text-3xl block w-full transition-colors hover:bg-blue-700 hover:text-white`}
+              >
+                Api key
               </Link>
             </li>
           </ul>

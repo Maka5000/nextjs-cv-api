@@ -5,6 +5,13 @@ export interface AuthUser {
   password: string;
 }
 
+export interface ApiKey {
+  id : string;
+  user_id : string;
+  user_email : string;
+  api_key_hash : string;
+}
+
 export interface User {
   id: string;
   name: string;

@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 import {
+  ApiKey,
   Contact,
   Education,
   Job,
@@ -60,6 +61,27 @@ export const fetchUserByID = unstable_cache(
   },
   [],
   { tags: ["users"] }
+);
+
+export const fetchApiKeyByUserId = unstable_cache(
+  async (userid: string) => {
+    try {
+      const data =
+        await sql<ApiKey>`SELECT * FROM apikeys WHERE user_id = ${userid}`;
+
+      return data.rows[0];
+    } catch (error: any) {
+      console.error("Database Error: ", error);
+
+      if (error.code === "22P02") {
+        throw new Error("userid format is invalid. Please check your userid.")
+      }
+
+      throw new Error("Failed to fetch apikey by userid.");
+    }
+  },
+  [],
+  { tags: ["apikey"] }
 );
 
 export const fetchEducations = unstable_cache(
