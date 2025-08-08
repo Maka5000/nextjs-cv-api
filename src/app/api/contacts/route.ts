@@ -2,7 +2,7 @@ import { withApiKeyCheck } from "@/app/lib/withApiKeyCheck";
 import { fetchContacts } from "@/app/lib/data";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function handler(req: NextRequest) {
+async function handler(req: NextRequest) {
   try {
     const useridQuery = req.nextUrl.searchParams.get("userid");
     const typeQuery = req.nextUrl.searchParams.get("type");
