@@ -265,7 +265,8 @@ export async function createApiKey(
       uuid_generate_v4(),
       ${userId},
       ${userEmail},
-      ${apiKeyHash}
+      ${apiKeyHash},
+      ${null}
     );`;
   } catch (error) {
     console.error(error);
@@ -282,12 +283,34 @@ export async function changeApiKey(userId: string, new_api_key_hash: string) {
     console.error("Database error: ", error);
     throw new Error("Failed to change api key");
   }
+
+  revalidateTag("apikey");
 }
 
-export async function compareApiKey(api_key : string, api_key_hash : string) {
+export async function deleteApiKey(userId: string) {
+  try {
+    await sql`DELETE FROM apikeys WHERE user_id = ${userId}`;
+  } catch (error) {
+    console.error("Databese error: ", error);
+    throw new Error("Failed to delete api key");
+  }
+
+  revalidateTag("apikey");
+}
+
+export async function updateApiKeyLastUsed(userId: string, date: string) {
+  try {
+    await sql`UPDATE apikeys SET lastusedat = ${date} WHERE user_id = ${userId}`;
+  } catch (error) {
+    console.error("Database error: ", error);
+    throw new Error("Failed to update apikeys");
+  }
+}
+
+export async function compareApiKey(api_key: string, api_key_hash: string) {
   try {
     const isValid = bcrypt.compare(api_key, api_key_hash);
-    return isValid
+    return isValid;
   } catch (error) {
     console.error("Compare error: ", error);
     throw new Error("Failed to compare api keys");

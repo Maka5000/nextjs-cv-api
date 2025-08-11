@@ -3,6 +3,7 @@
 import {
   changeApiKey,
   createApiKey,
+  deleteApiKey,
   generateApiKey,
   hashKey,
 } from "@/app/lib/actions";
@@ -34,7 +35,7 @@ export default function ApiKeyComponent({
     }
   }, []);
 
-  async function handleClick() {
+  async function handleGenerate() {
     try {
       setLoading(true);
       const key = await generateApiKey();
@@ -52,6 +53,24 @@ export default function ApiKeyComponent({
     } catch (error) {
       console.error("Api key generating error: ", error);
       throw Error("Failed to generate api key");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      setLoading(true);
+
+      if (!isApiKeyExist) return;
+
+      await deleteApiKey(session.user.id);
+
+      setApiKey("Generate api key by clicking a button bellow");
+      setKeyGenerated(false);
+    } catch (error) {
+      console.error("Api key deleting error: ", error);
+      throw Error("Failed to delete api key");
     } finally {
       setLoading(false);
     }
@@ -90,12 +109,24 @@ export default function ApiKeyComponent({
         </p>
       )}
       <div className="text-right">
+        {isApiKeyExist && (
+          <button
+            type="button"
+            className={`text-right bg-red-500 rounded-xl px-5 text-white transition-colors hover:bg-red-700 max-w-fit mt-4 mr-2 ${
+              loading && "animate-pulse"
+            }`}
+            onClick={handleDelete}
+            disabled={loading}
+          >
+            Delete key
+          </button>
+        )}
         <button
           type="button"
           className={`text-right bg-blue-500 rounded-xl px-5 text-white transition-colors hover:bg-blue-700 max-w-fit mt-4 ${
             loading && "animate-pulse"
           }`}
-          onClick={handleClick}
+          onClick={handleGenerate}
           disabled={loading}
         >
           Generate key

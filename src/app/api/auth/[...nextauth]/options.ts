@@ -57,7 +57,6 @@ export const options: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        console.log('jwtCallback: ', {token, user});
       }
 
       return token;
