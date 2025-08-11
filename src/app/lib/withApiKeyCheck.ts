@@ -1,5 +1,5 @@
 import { fetchApiKeyByUserId } from "./data";
-import { compareApiKey } from "./actions";
+import { compareApiKey, updateApiKeyLastUsed } from "./actions";
 import { NextRequest, NextResponse } from "next/server";
 import Redis from "ioredis";
 
@@ -23,7 +23,13 @@ export function withApiKeyCheck(handler: Handler): Handler {
       const RATE_LIMIT = 100;
       const WINDOW_SECONDS = 60;
 
-      const api_key_hash = (await fetchApiKeyByUserId(userId)).api_key_hash;
+      const fetchedApiKey = await fetchApiKeyByUserId(userId);
+
+      if(!fetchedApiKey) {
+        return NextResponse.json({message : "Api key doesn't exist or expired. Please create a new api key."})
+      }
+
+      const api_key_hash = fetchedApiKey.api_key_hash;
 
       const isValid = await compareApiKey(apiKeyHeader, api_key_hash);
 
@@ -44,8 +50,12 @@ export function withApiKeyCheck(handler: Handler): Handler {
         });
       }
 
+      const date_now = new Date();
+      await updateApiKeyLastUsed(userId, date_now.toISOString());
+
       return handler(req);
     } catch (err: any) {
+      console.error(err)
       return NextResponse.json({ error: err.message });
     }
   };

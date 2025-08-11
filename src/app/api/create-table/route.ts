@@ -1,4 +1,5 @@
 import { sql } from "@vercel/postgres";
+import { NextRequest, NextResponse } from "next/server";
 
 // async function createProfilesTable() {
 //   await sql`CREATE TABLE IF NOT EXISTS profiles (
@@ -82,27 +83,32 @@ import { sql } from "@vercel/postgres";
 //         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 //         user_id UUID NOT NULL,
 //         user_email TEXT NOT NULL UNIQUE,
-//         api_key_hash VARCHAR(255) NOT NULL
+//         api_key_hash VARCHAR(255) NOT NULL,
+//         lastUsedAt TIMESTAMP
 //     )`;
 // }
 
-export async function GET() {
-  try {
-    // await createProfilesTable();
-    // await createEducationsTable();
-    // await createSkillsTable();
-    // await createProjectsTable();
-    // await createContactsTable();
-    // await createLanguagesTable();
-    // await createJobsTable();
-    // await createAuthUsersTable();
+// export async function GET(req: NextRequest) {
+//   if (!req.headers.get("x-authenticated")) {
+//     return NextResponse.json({ error: "You are not authorized!" });
+//   }
 
-    // await createApiKeysTable().then(res => console.log(res));
+//   try {
+//     // await createProfilesTable();
+//     // await createEducationsTable();
+//     // await createSkillsTable();
+//     // await createProjectsTable();
+//     // await createContactsTable();
+//     // await createLanguagesTable();
+//     // await createJobsTable();
+//     // await createAuthUsersTable();
 
-    // return Response.json({ message: "Database tables created" });
-    return Response.json({ message: null });
-  } catch (error) {
-    // await sql`ROLLBACK`;
-    return Response.json({ error }, { status: 500 });
-  }
-}
+//     await createApiKeysTable().then(res => console.log(res));
+
+//     return Response.json({ message: "Database tables created" });
+//     return Response.json({ message: null });
+//   } catch (error) {
+//     await sql`ROLLBACK`;
+//     return Response.json({ error }, { status: 500 });
+//   }
+// }

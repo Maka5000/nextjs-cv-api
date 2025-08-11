@@ -1,0 +1,6 @@
+{
+    "crons" : [{
+        "path" : "/api/cron/delete-expired-keys",
+        "schedule" : "0 3 * * *"
+    }]
+}

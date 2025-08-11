@@ -8,7 +8,6 @@ export default async function ApiKey() {
   const session = await getServerSession(options);
 
   if (!session) {
-    console.log("APIkey page NOT AUTHORIZED!");
     redirect("/");
   }
 
@@ -28,7 +27,7 @@ export default async function ApiKey() {
       <ApiKeyComponent
         session={session}
         isApiKeyExist={isApiKeyExist}
-        db_user_id={fetchedApiKey.user_id}
+        db_user_id={session.user.id}
       />
     </div>
   );
